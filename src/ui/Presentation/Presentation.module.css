@@ -1,0 +1,10 @@
+.containerPresentation{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  p{
+    margin: 0px;
+    color: var(--black)
+  }
+}
