@@ -7,9 +7,9 @@ import TicketIcon from "../../assets/asidebarIcons/ticketIcon.svg?react"
 import { useState } from "react";
 import { Presentation } from "../../ui/Presentation/Presentation.jsx"
 import LogoutIcon from "../../assets/asidebarIcons/logoutIcon.svg?react"
+import { NavLink } from "react-router-dom"
 
 export const AsideBar = () => {
-  const [selected, setSelected] = useState("dashboard");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const dataUser = JSON.parse(localStorage.getItem("user"));
 
@@ -20,13 +20,12 @@ export const AsideBar = () => {
     window.location.href = "/";
   }
 
-  const handleSelected = (e) => {
-    setSelected(e);
-  }
-
   const handleCollapsed = () => {
     setIsCollapsed(!isCollapsed);
   }
+
+  const getNavLinkClass = ({ isActive }) => 
+    isActive ? styles.selected : styles.navItem;
 
   return (
     <div className={styles.asideBarContainer}>
@@ -37,35 +36,61 @@ export const AsideBar = () => {
       <aside>
         <nav className={styles.containerNavegation}>
           <ul>
-            <li className={selected === "dashboard" ? styles.selected : styles.navItem} onClick={() => handleSelected("dashboard")} >
-              <div className={styles.navIcons}>
-                <DashboardIcon />
-              </div>
-              <a href="#">Dashboard</a>
+            <li>
+              <NavLink
+                to="/admin"
+                end
+                className={getNavLinkClass}
+              >
+                <div className={styles.navIcons}>
+                  <DashboardIcon />
+                </div>
+                <span>Dashboard</span>
+              </NavLink>
             </li>
-            <li className={selected === "properties" ? styles.selected : styles.navItem} onClick={() => handleSelected("properties")} >
-              <div className={styles.navIcons}>
-                <PropertiesIcon />
-              </div>
-              <a href="#">Propiedades</a>
+            <li>
+              <NavLink
+                to="/admin/properties"
+                className={getNavLinkClass}
+              >
+                <div className={styles.navIcons}>
+                  <PropertiesIcon />
+                </div>
+                <span>Propiedades</span>
+              </NavLink>
             </li>
-            <li className={selected === "customers" ? styles.selected : styles.navItem} onClick={() => handleSelected("customers")} >
-              <div className={styles.navIcons}>
-                <CustomerIcon />
-              </div>
-              <a href="#">Customers</a>
+            <li>
+              <NavLink
+                to="/admin/customers"
+                className={getNavLinkClass}
+              >
+                <div className={styles.navIcons}>
+                  <CustomerIcon />
+                </div>
+                <span>Customers</span>
+              </NavLink>
             </li>
-            <li className={selected === "tickets" ? styles.selected : styles.navItem} onClick={() => handleSelected("tickets")} >
-              <div className={styles.navIcons}>
-                <TicketIcon />
-              </div>
-              <a href="#">Tickets</a>
+            <li>
+              <NavLink
+                to="/admin/tickets"
+                className={getNavLinkClass}
+              >
+                <div className={styles.navIcons}>
+                  <TicketIcon />
+                </div>
+                <span>Tickets</span>
+              </NavLink>
             </li>
-            <li className={selected === "services" ? styles.selected : styles.navItem} onClick={() => handleSelected("services")} >
-              <div className={styles.navIcons}>
-                <ServiceIcon />
-              </div>
-              <a href="#">Services</a>
+            <li>
+              <NavLink
+                to="/admin/services"
+                className={getNavLinkClass}
+              >
+                <div className={styles.navIcons}>
+                  <ServiceIcon />
+                </div>
+                <span>Services</span>
+              </NavLink>
             </li>
           </ul>
         </nav>

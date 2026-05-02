@@ -37,55 +37,54 @@
 
     li {
       display: flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      border-radius: 8px;
-      padding: 10px;
-      border: 1px solid transparent;
-      transition: all 0.3s ease;
+      flex-direction: column;
+    }
+  }
+}
 
-      a {
-        color: var(--black);
-        text-decoration: none;
-        padding: 5px;
-        transition: color 0.3s ease;
-      }
+/* Base styles for the navigation links */
+.navItem, .selected {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 12px 15px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--black);
+}
 
-      &.navItem {
-        &:hover {
-          background-color: var(--cyan-ligth);
-          border: 1px solid var(--cyan);
-          color: var(--white-color);
+.navItem:hover {
+  background-color: var(--cyan-ligth);
+  border: 1px solid var(--cyan);
+  color: var(--white-color);
 
-          .navIcons {
-            svg path {
-              fill: var(--white-color);
-              transition: fill 0.3s ease;
-            }
-          }
+  .navIcons {
+    svg path {
+      fill: var(--white-color);
+      transition: fill 0.3s ease;
+    }
+  }
 
-          a {
-            color: white;
-          }
-        }
-      }
+  span {
+    color: white;
+  }
+}
 
-      &.selected {
-        background-color: var(--cyan);
-        color: var(--white-color);
-        border: 1px solid var(--cyan);
+.selected {
+  background-color: var(--cyan);
+  color: var(--white-color);
+  border: 1px solid var(--cyan);
 
-        a {
-          color: var(--white-color);
-        }
+  span {
+    color: var(--white-color);
+  }
 
-        .navIcons {
-          svg path {
-            fill: var(--white-color);
-          }
-        }
-      }
+  .navIcons {
+    svg path {
+      fill: var(--white-color);
     }
   }
 }
@@ -121,10 +120,10 @@
   .logoutItem {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     cursor: pointer;
     border-radius: 8px;
-    padding: 10px;
+    padding: 12px 15px;
     border: 1px solid transparent;
     transition: all 0.3s ease;
 
