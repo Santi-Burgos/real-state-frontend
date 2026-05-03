@@ -1,0 +1,38 @@
+.statsCardContainer{
+  display: flex;
+  
+}
+
+.statsBodyCard{
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 16px ;
+  border: 1px solid;
+
+  .line{
+    height: 1px;
+    background-color: var(--hard-red);
+  }
+
+  span{
+    font-size: 16px;
+  }
+
+  p{
+    font-size: 14px;
+    margin: 0px;
+  }
+  .bodyItemsContainer{
+    display: flex;
+    padding: 0px 10px;
+    align-items: center;
+    justify-content: space-between;
+
+    svg{
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+}
