@@ -6,7 +6,6 @@ export const loginAuth = async ({ email, password }) => {
       "auth/",
       { email, password }
     );
-    console.log(res);
     return res.data;
   } catch (error) {
     console.error("Error login: ", error);

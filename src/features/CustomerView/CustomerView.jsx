@@ -1,9 +1,27 @@
+import { useEffect, useState } from "react";
 import styles from "./CustomerView.module.css";
 import { StatsCard } from "../../ui/StatsCard/StatsCard";
 import IconCustomer from "../../assets/customers.svg?react"
 import { CustomerTable } from "../../ui/CustomerTable/CustomerTable";
+import { getAllCustomer } from "../../actions/customer.action";
 
 export const CustomerView = () =>{
+  const [dataCustomer, setDataCustomer] = useState([]);
+  console.log(dataCustomer);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllCustomer();
+        console.log('data', data);
+        setDataCustomer(data);
+      } catch (error) {
+        console.error("Error al traer los clientes:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return(
     <>
       <section className={styles.containerHeader}>
@@ -37,7 +55,9 @@ export const CustomerView = () =>{
         </div>
       </div>
       <div>
-        <CustomerTable />
+        <CustomerTable
+          data={dataCustomer}
+        />
       </div>
     </>
   );
