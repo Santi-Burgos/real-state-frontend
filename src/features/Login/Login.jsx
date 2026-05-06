@@ -35,7 +35,7 @@ export const Login = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data));
 
-        navigate("/dashboard");
+        navigate("admin/");
       } else {
         alert(response.message || "Error al iniciar sesión.");
       }

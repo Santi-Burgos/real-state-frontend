@@ -42,8 +42,8 @@
   }
 }
 
-/* Base styles for the navigation links */
-.navItem, .selected {
+.navItem,
+.selected {
   display: flex;
   align-items: center;
   gap: 10px;

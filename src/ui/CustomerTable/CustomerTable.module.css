@@ -1,7 +1,6 @@
 .tableContainer {
   width: 100%;
   border-radius: 16px;
-  box-shadow: var(--shadow);
   margin: 1.5rem 0;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -95,7 +94,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.5rem;
+  padding: 16px 21px;
   background-color: var(--white-color);
   border-top: 1px solid var(--border);
   border-bottom-left-radius: 16px;

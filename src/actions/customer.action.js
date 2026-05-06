@@ -12,12 +12,13 @@ export const getAllCustomer = async() =>{
   }
 } 
 
-export const createCustomer = async() =>{
+export const createCustomer = async({email, phone, customerName, customerType}) =>{
   try{
     const res = await axiosInstance.post(
       "customers/",
       { email, phone, customerName, customerType } 
     );
+    return res.data;
   }catch(error){
     throw error;
   }

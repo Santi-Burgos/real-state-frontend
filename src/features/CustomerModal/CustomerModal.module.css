@@ -1,0 +1,154 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.containerModal {
+  padding: 20px;
+  background-color: var(--white-color);
+  border-radius: 16px;
+
+
+  .formSeparator {
+    height: 1px;
+    background-color: var(--black);
+  }
+
+  .headerModal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px;
+
+    .titlesModal{
+      gap: 5px;
+      h2{
+        margin: 0px;
+        color: var(--black);
+      }
+
+      h3{
+        font-size: 15px;
+        margin: 0px;
+        color: var(--text);
+      }
+    }
+
+    .calcelX {
+      background: var(--hard-red-ligth);
+      border: none;
+      padding: 4px 6px;
+      height: 20px;
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+    }
+  }
+
+  .bodyModal {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    gap: 15px;
+
+    .inputDataCustomer {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .titleInput {
+      display: flex;
+      flex-direction: column;
+      color: var(--black);
+      gap: 5px;
+      width: 100%;
+    }
+
+    .inputWrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      .inputIcon {
+        position: absolute;
+        left: 8px;
+        width: 16px;
+        height: 16px;
+        pointer-events: none;
+
+        path {
+          fill: var(--black);
+        }
+      }
+
+      input,
+      select {
+        width: 100%;
+        height: 35px;
+        padding: 0 10px 0 32px;
+        background: var(--white-color);
+        border: 1px solid var(--black);
+        color: var(--black);
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+
+        &:focus {
+          border-color: var(--cyan);
+        }
+      }
+
+      select {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .footerForm {
+    display: flex;
+    gap: 5px;
+    padding: 10px;
+    font-size: 16px;
+    justify-content: flex-end;
+
+    button {
+      border-radius: 10px;
+    }
+
+    .cancel {
+      background-color: var(--hard-red-ligth);
+      border: none;
+    }
+
+    .addCustomer {
+      padding: 10px;
+      background: var(--cyan);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+
+      svg {
+        width: 15px;
+        height: 15px;
+
+        path {
+          fill: var(--white-color);
+        }
+      }
+    }
+  }
+}
