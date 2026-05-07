@@ -8,16 +8,15 @@ import { useState } from "react";
 import { Presentation } from "../../ui/Presentation/Presentation.jsx"
 import LogoutIcon from "../../assets/asidebarIcons/logoutIcon.svg?react"
 import { NavLink } from "react-router-dom"
+import { useAuth } from "../../context/AuthContext.jsx"
 
 export const AsideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const dataUser = JSON.parse(localStorage.getItem("user"));
+  const { user, logout } = useAuth();
 
 
   const handleLogout = (e) =>{
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/";
+    logout();
   }
 
   const handleCollapsed = () => {
@@ -97,8 +96,8 @@ export const AsideBar = () => {
       </aside>
       <div className={styles.delimitedLine}></div>
         <Presentation 
-          username={dataUser?.username}
-          rolname={dataUser?.rolName}
+          username={user?.username}
+          rolname={user?.rolName}
         />
       <div className={styles.delimitedLine}></div>
       <div className={styles.logoutSection}>

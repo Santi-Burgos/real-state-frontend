@@ -42,13 +42,13 @@
 
 .containerFilters{
   display: flex;
-  
+  gap: 10px;
 
   .searchBar{
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 80%;
 
     .inputIcon{
       left: 8px;
@@ -74,7 +74,16 @@
         box-shadow: 1px 1px 5px rgba(0,0,0,0.3)
       }
     } 
+  }
 
+  .selectorFilter{
+    color: var(--black);
+    background: var(--white-color);
+  }
 
+  .orderButton{
+    background: var(--green);
+    border: 1px solid;
+    border-radius: 7px;
   }
 }

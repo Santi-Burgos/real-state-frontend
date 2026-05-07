@@ -16,7 +16,6 @@
   background-color: var(--white-color);
   border-radius: 16px;
 
-
   .formSeparator {
     height: 1px;
     background-color: var(--black);
@@ -30,6 +29,7 @@
 
     .titlesModal{
       gap: 5px;
+
       h2{
         margin: 0px;
         color: var(--black);
@@ -76,18 +76,18 @@
     }
 
     .inputWrapper {
-      position: relative;
       display: flex;
       align-items: center;
       width: 100%;
+      position: relative;
 
       .inputIcon {
-        position: absolute;
         left: 8px;
         width: 16px;
         height: 16px;
         pointer-events: none;
-
+        position: absolute;
+        
         path {
           fill: var(--black);
         }
@@ -95,7 +95,6 @@
 
       input,
       select {
-        width: 100%;
         height: 35px;
         padding: 0 10px 0 32px;
         background: var(--white-color);
@@ -104,6 +103,7 @@
         border-radius: 8px;
         font-size: 14px;
         outline: none;
+        width: 100%;
 
         &:focus {
           border-color: var(--cyan);
@@ -115,7 +115,7 @@
       }
     }
   }
-
+  
   .footerForm {
     display: flex;
     gap: 5px;

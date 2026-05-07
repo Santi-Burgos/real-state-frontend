@@ -1,9 +1,15 @@
 import { axiosInstance } from "../apiFrontend"; 
 
-export const getAllCustomer = async() =>{
+export const getAllCustomer = async({type, sort, valueSelector}) =>{
   try{
     const res = await axiosInstance.get(
-      "customers/",
+      "customers/",{
+        params:{
+          type: type,
+          sort: sort,
+          selector: valueSelector,
+        }
+      }
     );
     return res.data.data;
   }catch(error){

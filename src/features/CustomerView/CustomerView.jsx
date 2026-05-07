@@ -7,26 +7,68 @@ import { getAllCustomer } from "../../actions/customer.action";
 import { CustomerModal } from "../CustomerModal/CustomerModal";
 import AddButtonIcon from "../../assets/addButtonIcon.svg?react";
 import SearchIcon from "../../assets/searchIcon.svg?react";
+import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
 
 export const CustomerView = () =>{
   const [showForm, setShowForm] = useState(false);
   const [dataCustomer, setDataCustomer] = useState([]);
+  const [valueFilter, setValueFilter] = useState({
+    value: "",
+    type: ""
+  });
+  const [selectorFilter, setSelectorFilter] = useState({ value: "" });
+  const [dataTypeFilter, setDataTypeFilter] = useState("");
+  const [valueToggleOrder, setToggleOrder] = useState("desc");
+  
 
   const toggleModalCustomer = (e) => {
     setShowForm(!showForm);
   }
 
+  const handleChangeValue = (e) =>{
+    const { name, value} = e.target;
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    const  datatype = selectedOption.dataset.type;
+
+    setValueFilter((prevData) => ({
+      ...prevData,
+      value: value,
+      type: datatype
+    }));
+    setSelectorFilter({ value: "" });
+  }
+
+  const handleValueSelectors = (e) =>{
+    const { value } = e.target;
+    setSelectorFilter({ value });
+  }
+
+  const toggleAscDesc = () =>{
+    if(valueToggleOrder == "asc"){
+      setToggleOrder("desc")
+    }else{
+      setToggleOrder("asc")
+    }
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllCustomer();
+        const finalValue = valueFilter.type?.startsWith("op_selector") 
+          ? selectorFilter.value 
+          : valueFilter.value;
+
+        const data = await getAllCustomer({
+          type: valueFilter.type,
+          valueSelector: finalValue,
+          sort: valueToggleOrder,
+        });
         setDataCustomer(data);
       } catch (error) {
         console.error("Error al traer los clientes:", error);
       }
     };
     fetchData();
-  }, []);
+  }, [valueFilter, selectorFilter, valueToggleOrder]);
 
   return (
     <>
@@ -72,20 +114,49 @@ export const CustomerView = () =>{
               placeholder="Buscar cliente..."
             />
           </div>
-          <select>
-            <option disabled>Seleccionar filtro</option>
-            <option>Nombre</option>
-            <option>Fecha de creacion</option>
-            <option>Tipo de cliente</option>
-            <option>Estado de pago</option>
+          <select 
+            name="filterValue"
+            onChange={handleChangeValue}
+            value={valueFilter.value}
+            className={styles.selectorFilter}
+          >
+            <option data-type="all" value="allCustomers">Todos</option>
+            <option data-type="op_order_name" value="customerName">Nombre</option>
+            <option data-type="op_order_data" value="customerDate">Fecha de creacion</option>
+            <option data-type="op_selector_type" value="customerType">Tipo de cliente</option>
+            <option data-type="op_selector_status" value="paymentStatus">Estado de pago</option>
           </select>
-          {/* 
-            aca va la logica de filtrado, por ejemplo
-            si es fecha de creacion -> mas antiguo / mas reciente
-            si es nombre -> alfabetizacion
-            si es tipo de cliente -> filtrado de de seleccion
-            si es estado de pago -> estado
-          */}
+            {valueFilter.type?.startsWith("op_order") && (
+              <button className={styles.orderButton} onClick={toggleAscDesc}>
+                {valueFilter.value === "customerName" ? (
+                  valueToggleOrder === 'asc' ? "A - Z" : "Z - A"
+                ) : (
+                  valueToggleOrder === 'asc' ? "Asc" : "Desc"
+                )}
+              </button>
+            )}
+          {valueFilter.type?.startsWith("op_selector") && (
+            <>
+              {valueFilter.value == "customerType" ?(
+                <CustomerSelector
+                  customStyle={{width: "20%"}}
+                  onChange={handleValueSelectors}
+                  value={selectorFilter.value}
+                />
+              ) : (
+                <select
+                  className={styles.selectorFilter}
+                  onChange={handleValueSelectors}
+                  value={selectorFilter.value}
+                >
+                  <option value="" disabled>Estado</option>
+                  <option value="peding">Pendiente</option>
+                  <option value="unpaid">Deudor</option>
+                  <option value="paid">Abonado</option>
+                </select>
+              )}
+            </>
+          )}
         </div>
         <div>
           <CustomerTable

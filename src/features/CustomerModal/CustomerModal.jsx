@@ -6,6 +6,7 @@ import CustomerIcon from "../../assets/customerIcons.svg?react";
 import PhoneIcon from "../../assets/phoneCustomer.svg?react";
 import EmailIcon from "../../assets/emailIcon.svg?react";
 import TagIcon from "../../assets/tagCustomerIcon.svg?react";
+import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
 
 export const CustomerModal = ({onClose}) =>{
   const [customerData, setCustomerData] = useState({
@@ -98,21 +99,10 @@ export const CustomerModal = ({onClose}) =>{
           </div>
           <div className={styles.titleInput}>
             Tipo
-            <div className={styles.inputWrapper}>
-              <TagIcon className={styles.inputIcon} />
-              <select 
-                name="customerType"
-                value={customerData.customerType}
-                onChange={handleChange}
-              >
-                <option value="" disabled>Seleccione un tipo</option>
-                <option value="1">Inquilino</option>
-                <option value="2">Comprador</option>
-                <option value="3">Potencial inquilino</option>
-                <option value="4">Potencial comprador</option>
-                <option value="5">Customer</option>
-              </select> 
-            </div>
+            <CustomerSelector 
+              onChange={handleChange}
+              value={customerData.customerType}
+            />
           </div>
         </div>
         <div className={styles.footerForm}>

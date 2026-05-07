@@ -1,5 +1,7 @@
+import { useAuth } from "../../context/AuthContext.jsx";
+
 export const Dashboard = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user, logout } = useAuth();
 
   return (
     <div style={{ padding: "40px", textAlign: "center" }}>
@@ -7,11 +9,7 @@ export const Dashboard = () => {
       <p>Bienvenido, {user?.username || "Usuario"}!</p>
       <p>Tu rol ID es: {user?.rolId}</p>
       <button 
-        onClick={() => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          window.location.href = "/";
-        }}
+        onClick={logout}
         style={{
           marginTop: "20px",
           padding: "10px 20px",

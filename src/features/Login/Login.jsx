@@ -8,8 +8,11 @@ import LockPasswordIcon from "../../assets/lockPasswordIcon.svg?react";
 import NoLockPassIcon from "../../assets/noLockPassIcon.svg?react";
 import { loginAuth } from "../../actions/auth.action.js";
 
+import { useAuth } from "../../context/AuthContext.jsx";
+
 export const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [viewPass, setViewPass] = useState(false);
 
@@ -32,9 +35,7 @@ export const Login = () => {
     try {
       const response = await loginAuth(loginData);
       if (response.success) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data));
-
+        login(response.data);
         navigate("admin/");
       } else {
         alert(response.message || "Error al iniciar sesión.");
