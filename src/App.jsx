@@ -4,6 +4,7 @@ import { LoginPage } from './pages/LoginPage.jsx'
 import { MainAdminPage } from './pages/MainAdminPage.jsx'
 import { Dashboard } from './features/Dashboard/Dashboard.jsx'
 import { CustomerView } from './features/CustomerView/CustomerView.jsx'
+import CustomerProfile from './features/CustomerProfile/CustomerProfile.jsx'
 import { useAuth } from './context/AuthContext.jsx'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Route path="/admin" element={isAuthenticated ? <MainAdminPage /> : <Navigate to="/" />}>
         <Route index element={<Dashboard />} />
         <Route path="customers" element={<CustomerView />} />
+        <Route path="customer/:id" element={<CustomerProfile />} />
         <Route path="appointments" element={<div>Citas</div>} />
         <Route path="properties" element={<div>Propiedades</div>} />
         <Route path="tickets" element={<div>Tickets</div>} />

@@ -30,7 +30,7 @@ export const createCustomer = async({email, phone, customerName, customerType, c
   }
 }
 
-export const deleteCustomerById = async({customerId}) =>{
+export const deleteCustomerById = async({ customerId }) =>{
   try{
     const res = await axiosInstance.delete(
       `customers/${customerId}`
@@ -38,5 +38,17 @@ export const deleteCustomerById = async({customerId}) =>{
     return res.data;
   }catch(error){
     throw error
+  }
+}
+
+export const getSpecificCustomer = async({ id }) =>{
+  try{
+    const res = await axiosInstance.get(
+      `customers/${id}`
+    );
+    console.log('c', res.data);
+    return res.data
+  }catch(error){
+    throw error;
   }
 }

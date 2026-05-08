@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./CustomerView.module.css";
 import { StatsCard } from "../../ui/StatsCard/StatsCard";
 import IconCustomer from "../../assets/customers.svg?react";
@@ -12,6 +13,7 @@ import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment";
 import SliderDJIcon from "../../assets/sliderDJIcon.svg?react"
 
 export const CustomerView = () =>{
+  const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
   const [dataCustomer, setDataCustomer] = useState([]);
   const [valueFilter, setValueFilter] = useState({
@@ -60,6 +62,10 @@ export const CustomerView = () =>{
     }catch(error){
       console.log(error);
     }
+  }
+
+  const handleViewCall = (customerId) => {
+    navigate(`/admin/customer/${customerId}`);
   }
 
   useEffect(() => {
@@ -173,6 +179,7 @@ export const CustomerView = () =>{
           <CustomerTable
             data={dataCustomer}
             actionDelete={handleDeleteCall}
+            actionView={handleViewCall}
           />
           {showForm &&
             <CustomerModal

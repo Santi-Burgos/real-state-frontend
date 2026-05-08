@@ -1,0 +1,244 @@
+.container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  color: #888;
+  margin-top: 0.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.content {
+  display: grid;
+  gap: 2rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: transform 0.3s ease;
+  
+  .separatorLine{
+    height: 1px;
+    background: var(--cyan); 
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+  
+  .infoActions{
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+      margin-top: 0;
+      font-weight: 600;
+    }
+
+    .actions{
+      gap: 5px;
+      display: flex;
+
+      .edit{
+        height: 25px;
+        width: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: var(--cyan-ligth);
+        border: 1px solid var(--cyan);
+
+        svg{
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .delete{
+        background: var(--hard-red-ligth);
+        border: 1px solid var(--hard-red);
+        height: 25px;
+        width: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+
+        svg{
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+  
+  p {
+    color: #ccc;
+    line-height: 1.6;
+  }
+
+  .bodyCard{
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+
+    .presentation{
+      display: flex;
+      gap: 10px;
+      font-size: 22px;
+      align-items: center;
+  
+      .customerTypeContainer{
+        padding: 5px;
+        font-weight: 700;
+  
+        &.tenant{
+          background: var(--cyan-ligth);
+          border: var(--cyan);
+          color: var(--white-color);
+        }
+  
+        &.buyer{
+          border: 1px solid var(--green);
+          background: var(--green-ligth);
+          color: var(--green);
+        }
+      }
+    }
+  
+    .extraData{
+      display: flex;
+      gap: 50px;
+      font-size: 20px;
+      align-items: center;
+
+
+      .containerIndividualData{
+        display: flex;
+        gap: 10px;
+
+        .containerIconData{
+          background: var(--text);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 6px;
+          padding: 5px;
+
+          svg{
+            width: 15px;
+            height: 15px;
+            fill: var(--white-color);
+
+            path {
+              fill: var(--white-color)
+            }
+          }
+        }
+      }
+    }
+
+    .containerStatus{
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+
+      .billingState{
+        gap: 10px;
+        display: flex;
+        align-items: center;
+
+        .pending{
+          background: var(--text);
+          border: var(--smoke-bg);
+          color: var(--white-color);
+          padding: 5px;
+          justify-content: center;
+          display: flex;
+          border-radius: 10px 0px 10px 0px;
+        }
+  
+        .unpaid{
+          background: var(--hard-red-ligth);
+          border: var(--hard-red);
+          color: var(--white-color);
+          padding: 5px;
+          justify-content: center;
+          display: flex;
+          border-radius: 10px 0px 10px 0px;
+        }
+        
+        .paid{
+          background: var(--green-ligth);
+          border: var(--green);
+          color: var(--white-color);
+          padding: 5px;
+          justify-content: center;
+          display: flex;
+          border-radius: 10px 0px 10px 0px;
+        }
+
+      }
+      .billingPeriod{
+        gap: 10px;
+        display: flex;
+        align-items: center;
+
+        .date{
+          border-radius: 5px;
+          justify-content: center;
+          display: flex;
+          padding: 5px;
+        }
+      }
+
+    }
+
+  }
+
+}
+
+
+
+.placeholder {
+  margin-top: 2rem;
+  padding: 3rem;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
