@@ -4,26 +4,37 @@ import CustomerIcon from "../../assets/asidebarIcons/customerIcons.svg?react"
 import ServiceIcon from "../../assets/asidebarIcons/servicesIcon.svg?react"
 import DashboardIcon from "../../assets/asidebarIcons/dashboardIcon.svg?react"
 import TicketIcon from "../../assets/asidebarIcons/ticketIcon.svg?react"
-import { useState } from "react";
+import AppointmentsIcon from "../../assets/asidebarIcons/appointmentsIcon.svg?react"
+
+import { useState, useEffect } from "react";
 import { Presentation } from "../../ui/Presentation/Presentation.jsx"
 import LogoutIcon from "../../assets/asidebarIcons/logoutIcon.svg?react"
-import { NavLink } from "react-router-dom"
+import ArrowIcon from "../../assets/asidebarIcons/arrowIcon.svg?react"
+import { NavLink, useLocation } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext.jsx"
 
 export const AsideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { user, logout } = useAuth();
+  const location = useLocation();
+  const [isCustomersOpen, setIsCustomersOpen] = useState(false);
 
+  useEffect(() => {
+    if (location.pathname.includes('customers') || location.pathname.includes('appointments')) {
+      setIsCustomersOpen(true);
+    }
+  }, [location.pathname]);
 
-  const handleLogout = (e) =>{
+  const handleLogout = (e) => {
     logout();
   }
 
-  const handleCollapsed = () => {
-    setIsCollapsed(!isCollapsed);
+  const toggleCustomers = (e) => {
+    e.preventDefault();
+    setIsCustomersOpen(!isCustomersOpen);
   }
 
-  const getNavLinkClass = ({ isActive }) => 
+  const getNavLinkClass = ({ isActive }) =>
     isActive ? styles.selected : styles.navItem;
 
   return (
@@ -59,16 +70,40 @@ export const AsideBar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to="/admin/customers"
-                className={getNavLinkClass}
-              >
-                <div className={styles.navIcons}>
-                  <CustomerIcon />
+              <div className={styles.navItemWithArrow}>
+                <NavLink
+                  to="/admin/customers"
+                  className={getNavLinkClass}
+                >
+                  <div className={styles.navIcons}>
+                    <CustomerIcon />
+                  </div>
+                  <span>Customers</span>
+                </NavLink>
+                <div
+                  className={`${styles.arrowContainer} ${isCustomersOpen ? styles.arrowOpen : ""} ${getNavLinkClass}`}
+                  onClick={toggleCustomers}
+                >
+                  <ArrowIcon />
                 </div>
-                <span>Customers</span>
-              </NavLink>
+              </div>
+              {isCustomersOpen && (
+                <ul className={styles.submenu}>
+                  <li>
+                    <NavLink
+                      to="/admin/appointments"
+                      className={getNavLinkClass}
+                    >
+                      <div className={styles.navIcons}>
+                        <AppointmentsIcon />
+                      </div>
+                      <span>Citas</span>
+                    </NavLink>
+                  </li>
+                </ul>
+              )}
             </li>
+
             <li>
               <NavLink
                 to="/admin/tickets"
@@ -95,10 +130,10 @@ export const AsideBar = () => {
         </nav>
       </aside>
       <div className={styles.delimitedLine}></div>
-        <Presentation 
-          username={user?.username}
-          rolname={user?.rolName}
-        />
+      <Presentation
+        username={user?.username}
+        rolname={user?.rolName}
+      />
       <div className={styles.delimitedLine}></div>
       <div className={styles.logoutSection}>
         <ul>

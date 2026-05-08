@@ -39,6 +39,15 @@
       display: flex;
       flex-direction: column;
     }
+
+    .submenu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+      margin-top: 5px;
+      gap: 5px;
+    }
   }
 }
 
@@ -151,3 +160,43 @@
     }
   }
 }
+
+.navItemWithArrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  a {
+    flex: 1;
+  }
+
+  .arrowContainer {
+    position: absolute;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 5;
+    color: var(--black);
+
+    &:hover{
+      border-radius: 10px;
+      background: var(--cyan-ligth);
+    }
+  }
+
+  .arrowOpen {
+    transform: rotate(180deg);
+  }
+
+  &:hover,
+  &:has(.selected) {
+    .arrowContainer {
+      color: var(--white-color);
+    }
+  }
+}
+
+

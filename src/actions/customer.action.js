@@ -18,14 +18,25 @@ export const getAllCustomer = async({type, sort, valueSelector}) =>{
   }
 } 
 
-export const createCustomer = async({email, phone, customerName, customerType}) =>{
+export const createCustomer = async({email, phone, customerName, customerType, customerStatusPayment}) =>{
   try{
     const res = await axiosInstance.post(
       "customers/",
-      { email, phone, customerName, customerType } 
+      { email, phone, customerName, customerType, customerStatusPayment } 
     );
     return res.data;
   }catch(error){
     throw error;
+  }
+}
+
+export const deleteCustomerById = async({customerId}) =>{
+  try{
+    const res = await axiosInstance.delete(
+      `customers/${customerId}`
+    )
+    return res.data;
+  }catch(error){
+    throw error
   }
 }

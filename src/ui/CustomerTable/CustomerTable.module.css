@@ -14,7 +14,7 @@
       background: var(--green);
 
       .headerCell {
-        padding: 17px 21px;
+        padding: 10px;
         font-weight: 700;
         color: var(--text-h);
         font-size: 0.85rem;
@@ -40,10 +40,63 @@
         font-size: 0.95rem;
         border-bottom: 1px solid var(--border);
         vertical-align: middle;
+        gap: 5px;
 
         &:first-child {
           font-weight: 600;
           color: var(--cyan);
+        }
+
+        .cellActions{
+          display: flex;
+          gap: 10px;
+
+          .actionsContainer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            height: 25px;
+            border-radius: 6px;
+
+            &.view{
+              border: 1px solid var(--green);
+
+              &:hover{
+                background: var(--green);
+                svg{
+                  path{
+                    fill: var(--white-color);
+                  }
+                }
+              }
+            }
+
+            &.delete{
+              border: 1px solid var(--hard-red);
+
+              &:hover{
+                background: var(--hard-red);
+                svg{
+                  path{
+                    fill: var(--white-color);
+                  }
+                }
+              }
+            }
+
+            svg{
+              width: 15px;
+              height: 15px;
+              
+              path{
+                fill: var(--black);
+              }
+            }
+            &:hover{
+              cursor: pointer;
+            }
+          }
         }
       }
     }
@@ -74,19 +127,40 @@
   }
 }
 
+.badgePayment{
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  border: 1px solid transparent;
+
+  &.pending{
+    color: var(--smoke-bg);
+    background-color: var(--text);
+  }
+  
+  &.unpaid{
+    color: var(--hard-red);
+    background-color: var(--hard-red-ligth);
+  }
+
+  &.paid{
+    color: var(--green);
+    background-color: var(--green-ligth);
+  }
+
+}
+
 .emptyMessage {
   padding: 3rem;
   text-align: center;
   color: var(--text);
   font-size: 1.1rem;
   opacity: 0.7;
-}
-
-@media (max-width: 768px) {
-  .headerCell,
-  .tableCell {
-    padding: 1rem;
-  }
 }
 
 .tableFooter {
@@ -164,5 +238,12 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .headerCell,
+  .tableCell {
+    padding: 1rem;
   }
 }

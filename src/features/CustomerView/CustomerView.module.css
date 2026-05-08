@@ -77,13 +77,44 @@
   }
 
   .selectorFilter{
-    color: var(--black);
-    background: var(--white-color);
+    display: flex;
+    align-items: center;
+    position: relative;
+    
+    .selectorIcon{
+      position: absolute; 
+      left: 10px;        
+      width: 18px;      
+      height: 18px;
+      z-index: 10;    
+      pointer-events: none;
+
+      path{
+        fill: var(--black);
+      }
+    }
+
+    select{
+      padding: 0 10px 0 32px;
+      background: var(--white-color);
+      border: 1px solid var(--black);
+      color: var(--black);
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      height: 35px;
+      cursor: pointer;
+
+      &:focus {
+        border-color: var(--cyan);
+      }
+    }
   }
 
   .orderButton{
     background: var(--green);
     border: 1px solid;
     border-radius: 7px;
+    min-width: 60px;
   }
 }

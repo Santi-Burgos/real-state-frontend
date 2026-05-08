@@ -3,11 +3,13 @@ import styles from "./CustomerView.module.css";
 import { StatsCard } from "../../ui/StatsCard/StatsCard";
 import IconCustomer from "../../assets/customers.svg?react";
 import { CustomerTable } from "../../ui/CustomerTable/CustomerTable";
-import { getAllCustomer } from "../../actions/customer.action";
+import { deleteCustomerById, getAllCustomer } from "../../actions/customer.action";
 import { CustomerModal } from "../CustomerModal/CustomerModal";
 import AddButtonIcon from "../../assets/addButtonIcon.svg?react";
 import SearchIcon from "../../assets/searchIcon.svg?react";
 import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
+import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment";
+import SliderDJIcon from "../../assets/sliderDJIcon.svg?react"
 
 export const CustomerView = () =>{
   const [showForm, setShowForm] = useState(false);
@@ -18,7 +20,7 @@ export const CustomerView = () =>{
   });
   const [selectorFilter, setSelectorFilter] = useState({ value: "" });
   const [dataTypeFilter, setDataTypeFilter] = useState("");
-  const [valueToggleOrder, setToggleOrder] = useState("desc");
+  const [valueToggleOrder, setToggleOrder] = useState("asc"); 
   
 
   const toggleModalCustomer = (e) => {
@@ -50,6 +52,16 @@ export const CustomerView = () =>{
       setToggleOrder("asc")
     }
   }
+
+  const handleDeleteCall = async(customerId) =>{
+    console.log(customerId)
+    try{
+      const data = await deleteCustomerById({customerId})
+    }catch(error){
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -114,19 +126,23 @@ export const CustomerView = () =>{
               placeholder="Buscar cliente..."
             />
           </div>
-          <select 
-            name="filterValue"
-            onChange={handleChangeValue}
-            value={valueFilter.value}
-            className={styles.selectorFilter}
-          >
-            <option data-type="all" value="allCustomers">Todos</option>
-            <option data-type="op_order_name" value="customerName">Nombre</option>
-            <option data-type="op_order_data" value="customerDate">Fecha de creacion</option>
-            <option data-type="op_selector_type" value="customerType">Tipo de cliente</option>
-            <option data-type="op_selector_status" value="paymentStatus">Estado de pago</option>
-          </select>
-            {valueFilter.type?.startsWith("op_order") && (
+          <div className={styles.selectorFilter}>
+            <SliderDJIcon 
+              className={styles.selectorIcon}
+            />
+            <select 
+              name="filterValue"
+              onChange={handleChangeValue}
+              value={valueFilter.value}
+            >
+              <option data-type="all" value="allCustomers">Todos</option>
+              <option data-type="op_sort_name" value="customerName">Nombre</option>
+              <option data-type="op_sort_date" value="customerDate">Fecha de creacion</option>
+              <option data-type="op_selector_type" value="customerType">Tipo de cliente</option>
+              <option data-type="op_selector_status" value="paymentStatus">Estado de pago</option>
+            </select>
+          </div>
+            {valueFilter.type?.startsWith("op_sort") && (
               <button className={styles.orderButton} onClick={toggleAscDesc}>
                 {valueFilter.value === "customerName" ? (
                   valueToggleOrder === 'asc' ? "A - Z" : "Z - A"
@@ -139,21 +155,16 @@ export const CustomerView = () =>{
             <>
               {valueFilter.value == "customerType" ?(
                 <CustomerSelector
-                  customStyle={{width: "20%"}}
+                  customStyle={{width: "25%"}}
                   onChange={handleValueSelectors}
                   value={selectorFilter.value}
                 />
               ) : (
-                <select
-                  className={styles.selectorFilter}
+                <SelectorPaymentStatus 
                   onChange={handleValueSelectors}
                   value={selectorFilter.value}
-                >
-                  <option value="" disabled>Estado</option>
-                  <option value="peding">Pendiente</option>
-                  <option value="unpaid">Deudor</option>
-                  <option value="paid">Abonado</option>
-                </select>
+                  customStyle={{width: "20%"}}
+                />
               )}
             </>
           )}
@@ -161,6 +172,7 @@ export const CustomerView = () =>{
         <div>
           <CustomerTable
             data={dataCustomer}
+            actionDelete={handleDeleteCall}
           />
           {showForm &&
             <CustomerModal

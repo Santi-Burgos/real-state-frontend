@@ -15,6 +15,7 @@ function App() {
       <Route path="/admin" element={isAuthenticated ? <MainAdminPage /> : <Navigate to="/" />}>
         <Route index element={<Dashboard />} />
         <Route path="customers" element={<CustomerView />} />
+        <Route path="appointments" element={<div>Citas</div>} />
         <Route path="properties" element={<div>Propiedades</div>} />
         <Route path="tickets" element={<div>Tickets</div>} />
         <Route path="services" element={<div>Servicios</div>} />

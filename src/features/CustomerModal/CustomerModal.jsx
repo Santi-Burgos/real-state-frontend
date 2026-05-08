@@ -7,42 +7,46 @@ import PhoneIcon from "../../assets/phoneCustomer.svg?react";
 import EmailIcon from "../../assets/emailIcon.svg?react";
 import TagIcon from "../../assets/tagCustomerIcon.svg?react";
 import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
+import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment.jsx";
 
-export const CustomerModal = ({onClose}) =>{
+export const CustomerModal = ({ onClose }) => {
   const [customerData, setCustomerData] = useState({
     customerName: "",
     email: "",
     phone: "",
     customerType: "",
+    customerStatusPayment: "",
   });
-  
-  const handleChange = (e) =>{
-    const { name, value} = e.target;
-    
-    setCustomerData((prevData) =>({
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setCustomerData((prevData) => ({
       ...prevData,
       [name]: value
     }));
-  } 
+  }
 
-  const saveCustomer = async(e) =>{
+  const saveCustomer = async (e) => {
     e.preventDefault();
     const sanatizedForm = {
       ...customerData,
       phone: Number(customerData.phone),
-      customerType: Number(customerData.customerType)
+      customerType: Number(customerData.customerType),
+      customerStatusPayment: Number(customerData.customerStatusPayment)
     }
-    try{
+
+    try {
       const response = await createCustomer(sanatizedForm);
-      if(response.success){
+      if (response.success) {
         onClose();
       }
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
-  return(
+  return (
     <div className={styles.overlay}>
       <div className={styles.containerModal}>
         <div className={styles.headerModal}>
@@ -50,20 +54,20 @@ export const CustomerModal = ({onClose}) =>{
             <h2>Registrar Cliente</h2>
             <h3>Registro de gestión central</h3>
           </div>
-          <button 
+          <button
             className={styles.calcelX}
             onClick={onClose}
           >
             X
           </button>
         </div>
-        <div className={styles.formSeparator}/>
+        <div className={styles.formSeparator} />
         <div className={styles.bodyModal}>
           <div className={styles.titleInput}>
             Nombre del cliente
             <div className={styles.inputWrapper}>
               <CustomerIcon className={styles.inputIcon} />
-              <input 
+              <input
                 placeholder="Nombre del cliente"
                 name="customerName"
                 value={customerData.customerName}
@@ -76,7 +80,7 @@ export const CustomerModal = ({onClose}) =>{
               Número de telefono
               <div className={styles.inputWrapper}>
                 <PhoneIcon className={styles.inputIcon} />
-                <input 
+                <input
                   placeholder="542302421241"
                   name="phone"
                   value={customerData.phone}
@@ -89,8 +93,8 @@ export const CustomerModal = ({onClose}) =>{
               <div className={styles.inputWrapper}>
                 <EmailIcon className={styles.inputIcon} />
                 <input
-                  placeholder="Email del cliente"
-                  name="ejemplo@gmail.com"
+                  placeholder="ejemplo@gmail.com"
+                  name="email"
                   value={customerData.email}
                   onChange={handleChange}
                 />
@@ -99,9 +103,16 @@ export const CustomerModal = ({onClose}) =>{
           </div>
           <div className={styles.titleInput}>
             Tipo
-            <CustomerSelector 
+            <CustomerSelector
               onChange={handleChange}
               value={customerData.customerType}
+            />
+          </div>
+          <div className={styles.titleInput}>
+            Estado de pago
+            <SelectorPaymentStatus
+              onChange={handleChange}
+              value={customerData.customerStatusPayment}
             />
           </div>
         </div>

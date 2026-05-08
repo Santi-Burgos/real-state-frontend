@@ -1,6 +1,21 @@
 import styles from './CustomerTable.module.css';
+import TrashIcon from "../../assets/trashIcon.svg?react";
+import EyesIcon from "../../assets/lockPasswordIcon.svg?react";
 
-export const CustomerTable = ({ data }) => {
+export const CustomerTable = ({ data, actionDelete, actionView }) => {
+  const handleTableClick = (e) => {
+    const actionBtn = e.target.closest('[data-action]');
+    const cellWithId = e.target.closest('[data-customer-id]');
+
+    if (!actionBtn || !cellWithId) return;
+
+    const { action } = actionBtn.dataset;
+    const { customerId } = cellWithId.dataset;
+
+    if (action === 'delete') actionDelete(customerId);
+    if (action === 'view') actionView(customerId);
+  };
+
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -10,9 +25,11 @@ export const CustomerTable = ({ data }) => {
             <th className={styles.headerCell}>Email</th>
             <th className={styles.headerCell}>Teléfono</th>
             <th className={styles.headerCell}>Tipo</th>
+            <th className={styles.headerCell}>Pagos</th>
+            <th className={styles.headerCell}>Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody onClick={handleTableClick}>
           {data && data.length > 0 ? (
             data.map((d, index) => (
               <tr key={index} className={styles.tableRow}>
@@ -21,15 +38,35 @@ export const CustomerTable = ({ data }) => {
                 <td className={styles.tableCell}>{d.customerPhone}</td>
                 <td className={styles.tableCell}>
                   <span className={`${styles.badge} ${styles[d.customerType.toLowerCase()]}`}>
-                    {d.customerType}
+                    {d.customerType.toLowerCase()}
                   </span>
+                </td>
+                <td className={styles.tableCell}>
+                  <span className={`${styles.badgePayment} ${styles[d.customerStatusPayment.toLowerCase()]}`}>
+                    {d.customerStatusPayment.toLowerCase() != "null"
+                      ? d.customerStatusPayment.toLowerCase() : "-"}
+                  </span>
+                </td>
+                <td className={styles.tableCell} data-customer-id={d.customerId}>
+                  <div className={styles.cellActions}>
+                    <div className={`${styles.actionsContainer} ${styles.view}`}
+                      data-action="view"
+                    >
+                      <EyesIcon />
+                    </div>
+                    <div className={`${styles.actionsContainer} ${styles.delete}`}
+                      data-action="delete"
+                    >
+                      <TrashIcon />
+                    </div>
+                  </div>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
               <td colSpan="4" className={styles.emptyMessage}>
-                Agrega un customer para verlo
+                Agrega un cliente para verlo
               </td>
             </tr>
           )}
