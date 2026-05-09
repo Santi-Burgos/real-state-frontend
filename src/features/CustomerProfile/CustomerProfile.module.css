@@ -232,6 +232,60 @@
   font-style: italic;
 }
 
+.containerKPI{
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  justify-content: center;
+}
+
+.categories {
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 2rem;
+  padding-bottom: 5px;
+
+  .categorie {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    color: var(--text);
+    border-bottom: 2px solid transparent;
+
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--text);
+    }
+
+    &:hover {
+      color: var(--cyan);
+    }
+
+    &.active {
+      color: var(--cyan);
+      border-bottom: 2px solid var(--cyan);
+
+      svg{
+        path{
+          fill: var(--cyan);
+        }
+      }
+    }
+  }
+}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;
