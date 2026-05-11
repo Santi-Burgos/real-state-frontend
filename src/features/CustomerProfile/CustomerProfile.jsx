@@ -1,12 +1,15 @@
 import { useParams } from 'react-router-dom';
-import styles from './CustomerProfile.module.css';
+import { PaymentsContainer } from '../../ui/PaymentsContainer/PaymentsContainer';
+import { getAllTicketsById } from '../../actions/tickets.action';
 import { useEffect, useState } from 'react';
 import { getSpecificCustomer } from '../../actions/customer.action';
+import { StatsCard } from '../../ui/StatsCard/StatsCard';
+import { TicketsContainer } from '../../ui/TicketsContainer/TicketsContainer';
+import styles from './CustomerProfile.module.css';
 import TrashIcon from "../../assets/trashIcon.svg?react";
 import EditIcon from "../../assets/editIcon.svg?react";
 import PhoneIcon from "../../assets/phoneCustomer.svg?react";
 import EmailIcon from "../../assets/emailIcon.svg?react";
-import { StatsCard } from '../../ui/StatsCard/StatsCard';
 import MoneyBagIcon from "../../assets/moneyBagIcon.svg?react";
 import StatsIcon from "../../assets/statsAnalityc.svg?react";
 import TicketIcon from "../../assets/ticketIcon.svg?react";
@@ -15,19 +18,31 @@ const CustomerProfile = () => {
   const { id } = useParams();
   const [profileCustomer, setProfileCustomer] = useState(null);
   const [activeCategory, setActiveCategory] = useState('resume');
+  const [tickets, setAllTickets] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getSpecificCustomer({ id })
-        console.log(data.data)
         setProfileCustomer(data?.data);
       } catch (error) {
         console.error("Error al traer la info del cliente:", error);
       }
     }
     fetchData();
-  }, [])
+  }, [id])
+
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const data = await getAllTicketsById({ id })
+        setAllTickets(data?.data || data);
+      } catch (error) {
+        console.error("error al traer los tickets del usuario: ", error);
+      }
+    }
+    fetchTickets();
+  }, [id]);
 
   if (!profileCustomer) {
     return <div>cargando perfil...</div>
@@ -44,8 +59,11 @@ const CustomerProfile = () => {
           <div className={styles.infoActions}>
             <h2>Información General</h2>
             <div className={styles.actions}>
-              <div className={styles.edit}><EditIcon /></div>
-              <div className={styles.delete}><TrashIcon /></div>
+              <div className={styles.edit}>
+                Editar<EditIcon /></div>
+              <div className={styles.delete}>
+                Eliminar<TrashIcon />
+              </div>
             </div>
           </div>
           <div className={styles.separatorLine} />
@@ -71,25 +89,15 @@ const CustomerProfile = () => {
                 <strong>{profileCustomer.customerEmail}</strong></div>
               <div>Creado: <strong>{profileCustomer.customerCreatedAt ? profileCustomer.customerCreatedAt : "####"}</strong></div>
             </div>
-            {/* <div className={styles.containerStatus}>
-              <div className={styles.billingState}>
-                Estado ultima factura: 
-                <div className={`${styles[profileCustomer.customerStatusPayment.toLowerCase()]}`}>
-                  {profileCustomer.customerStatusPayment.toLowerCase()}
-                </div>
-              </div>
-              <div className={styles.billingPeriod}>
-                Fecha de vencimiento:
-                <div className={styles.date}>
-                  ####
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
       <div className={styles.containerKPI}>
-        <StatsCard />
+        <StatsCard 
+          nameCard={"Active tickets"}
+          numberCard={tickets.length}
+          iconCard={TicketIcon}
+        />
         <StatsCard />
         <StatsCard />
       </div>
@@ -118,6 +126,12 @@ const CustomerProfile = () => {
               <h3>Todos los tickets</h3>
             </div>
           </div>
+        </div>
+        <div className={styles.containerContent}>
+          <PaymentsContainer />
+          <TicketsContainer
+            data={tickets}
+          />
         </div>
       </section>
     </div>

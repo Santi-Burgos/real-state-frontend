@@ -1,0 +1,112 @@
+.container {
+  width: 100%;
+  background-color: var(--white-color);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  font-family: 'Inter', sans-serif;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px;
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .exportBtn {
+      padding: 8px 16px;
+      background-color: var(--cyan);
+      color: var(--white-color);
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  .tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+
+    .paymentTable {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+
+      thead {
+        tr {
+          background-color: var(--text-h);
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+          padding: 12px 32px;
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--smoke-bg);
+          letter-spacing: 0.05em;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+          &:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+          }
+
+          &:hover {
+            background-color: var(--text-h);
+          }
+        }
+
+        td {
+          padding: 20px 32px;
+          font-size: 15px;
+          color: var(--smoke-bg);
+
+          &.description {
+            font-weight: 500;
+            color: var(--black);
+          }
+        }
+      }
+    }
+  }
+
+  .statusBadge {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+
+    &.paid {
+      background-color: var(--cyan);
+      color: var(--white-color);
+    }
+
+    &.pending {
+      background-color: var(--hard-red-ligth);
+      color: var(--hard-red);
+    }
+  }
+}

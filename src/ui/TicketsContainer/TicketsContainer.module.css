@@ -1,0 +1,155 @@
+.ContainerTickets {
+  width: 100%;
+  max-width: 350px;
+  background-color: var(--white-color);
+  border: 1px solid var(--white-color-ligth);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+
+  .headerTickets {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--white-color-ligth);
+
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--black);
+    }
+  }
+
+  .bodyTickets {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ticketItem {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background-color 0.2s ease;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover {
+      background-color: var(--text-h);
+    }
+  }
+
+  .presentationTickets {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--smoke-bg);
+    font-weight: 500;
+  }
+
+  .explicationTickets {
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--black);
+    }
+  }
+
+  .ticketDescription {
+    font-size: 14px;
+    color: var(--smoke-bg);
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ticketType {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .statusBadge {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .pending {
+    background-color: var(--smoke-bg);
+    color: var(--white-color);
+  }
+
+  .reject {
+    background-color: var(--hard-red-ligth);
+    color: var(--hard-red);
+  }
+
+  .in_progress {
+    background-color: var(--cyan-ligth);
+    color: var(--white-color);
+  }
+
+  .resolve {
+    background-color: var(--green-ligth);
+    color: var(--green);
+  }
+
+  .maintenance {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--cyan-ligth);
+    color: var(--white-color);
+    text-transform: uppercase;
+  }
+
+  .footerTickets {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--white-color);
+    border-top: 1px solid var(--white-color-ligth);
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: var(--text);
+
+      .createButton {
+        color: var(--cyan);
+      }
+    }
+
+    .createButton {
+      color: var(--cyan);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
+
+  .emptyMessage {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--smoke-bg);
+    font-style: italic;
+    font-size: 14px;
+  }
+}

@@ -7,7 +7,7 @@ export const StatsCard = ({nameCard, numberCard, iconCard: IconCard}) =>{
         <span>{nameCard ? nameCard : "Name Card"}</span>
         <div className={styles.line}/>
         <div className={styles.bodyItemsContainer}>
-          {IconCard && <IconCard />}
+          {IconCard && <IconCard />} 
           <p>{numberCard ? numberCard : "#"}</p>
         </div>
       </div>

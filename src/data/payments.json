@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "date": "Oct 01, 2023",
+    "description": "Monthly Rent - October",
+    "amount": "$3,200.00",
+    "status": "PAID"
+  },
+  {
+    "id": 2,
+    "date": "Sep 01, 2023",
+    "description": "Monthly Rent - September",
+    "amount": "$3,200.00",
+    "status": "PAID"
+  },
+  {
+    "id": 3,
+    "date": "Aug 15, 2023",
+    "description": "Maintenance Fee - Plumbing",
+    "amount": "$150.00",
+    "status": "PENDING"
+  },
+  {
+    "id": 4,
+    "date": "Jul 01, 2023",
+    "description": "Monthly Rent - July",
+    "amount": "$3,200.00",
+    "status": "PAID"
+  }
+]

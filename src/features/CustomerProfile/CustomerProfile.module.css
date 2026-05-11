@@ -58,34 +58,44 @@
       display: flex;
 
       .edit{
-        height: 25px;
-        width: 25px;
+        height: 35px;
+        padding: 0px 5px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 6px;
+        gap: 3px;
         background: var(--cyan-ligth);
         border: 1px solid var(--cyan);
+        color: var(--white-color);
 
         svg{
           width: 20px;
           height: 20px;
+          path{
+            fill: var(--white-color);
+          }
         }
       }
 
       .delete{
         background: var(--hard-red-ligth);
         border: 1px solid var(--hard-red);
-        height: 25px;
-        width: 25px;
+        height: 35px;
+        gap: 3px;
+        padding: 0px 5px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 6px;
+        color: var(--white-color);
 
         svg{
           width: 20px;
           height: 20px;
+          path{
+            fill: var(--white-color);
+          }
         }
       }
     }
@@ -218,8 +228,6 @@
 
 }
 
-
-
 .placeholder {
   margin-top: 2rem;
   padding: 3rem;
@@ -233,6 +241,7 @@
 }
 
 .containerKPI{
+  margin: 30px 0px 10px 0px;
   display: flex;
   gap: 10px;
   padding: 10px;
@@ -285,6 +294,12 @@
   }
 }
 
+.containerContent{
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 
 @keyframes fadeIn {
   from {
