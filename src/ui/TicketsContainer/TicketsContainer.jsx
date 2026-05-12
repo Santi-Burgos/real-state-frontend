@@ -9,14 +9,14 @@ export const TicketsContainer = ({ data = [] }) => {
       </div>
       <div className={styles.bodyTickets}>
         {data && data.length > 0 ? (
-          data.map((t) => (
+          data?.map((t) => (
             <div key={t.id} className={styles.ticketItem}>
               <div className={`${styles.presentationTickets}`}>
                 <div className={` ${styles.statusBadge} ${styles[t.ticketStatusId.toLowerCase()]}`}>
                   {t.ticketStatusId}
                 </div>
                 <div>
-                  #TK-4412
+                  #{t.ticketDisplayId}
                 </div>
               </div>
 

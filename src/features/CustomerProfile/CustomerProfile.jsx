@@ -95,7 +95,7 @@ const CustomerProfile = () => {
       <div className={styles.containerKPI}>
         <StatsCard 
           nameCard={"Active tickets"}
-          numberCard={tickets.length}
+          numberCard={tickets?.length || 0}
           iconCard={TicketIcon}
         />
         <StatsCard />

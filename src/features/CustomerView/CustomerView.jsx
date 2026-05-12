@@ -23,7 +23,7 @@ export const CustomerView = () =>{
   const [selectorFilter, setSelectorFilter] = useState({ value: "" });
   const [dataTypeFilter, setDataTypeFilter] = useState("");
   const [valueToggleOrder, setToggleOrder] = useState("asc"); 
-  
+  const [totalCustomers, setTotalCustomers] = useState('');   
 
   const toggleModalCustomer = (e) => {
     setShowForm(!showForm);
@@ -56,7 +56,6 @@ export const CustomerView = () =>{
   }
 
   const handleDeleteCall = async(customerId) =>{
-    console.log(customerId)
     try{
       const data = await deleteCustomerById({customerId})
     }catch(error){
@@ -80,7 +79,8 @@ export const CustomerView = () =>{
           valueSelector: finalValue,
           sort: valueToggleOrder,
         });
-        setDataCustomer(data);
+        setDataCustomer(data.customers);
+        setTotalCustomers(data.totalCustomers);
       } catch (error) {
         console.error("Error al traer los clientes:", error);
       }
@@ -104,7 +104,7 @@ export const CustomerView = () =>{
         <div className={styles.cardContainer}>
           <StatsCard
             nameCard={"Total Customer"}
-            numberCard={100}
+            numberCard={totalCustomers}  
             iconCard={IconCustomer}
           />
           <StatsCard
