@@ -6,6 +6,7 @@ import { Dashboard } from './features/Dashboard/Dashboard.jsx'
 import { CustomerView } from './features/CustomerView/CustomerView.jsx'
 import CustomerProfile from './features/CustomerProfile/CustomerProfile.jsx'
 import { useAuth } from './context/AuthContext.jsx'
+import { TicketsView } from './features/TicketsView/TicketsView.jsx'
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -19,7 +20,7 @@ function App() {
         <Route path="customer/:id" element={<CustomerProfile />} />
         <Route path="appointments" element={<div>Citas</div>} />
         <Route path="properties" element={<div>Propiedades</div>} />
-        <Route path="tickets" element={<div>Tickets</div>} />
+        <Route path="tickets" element={<div><TicketsView /></div>} />
         <Route path="services" element={<div>Servicios</div>} />
         <Route path="settings" element={<div>Configuración</div>} />
       </Route>

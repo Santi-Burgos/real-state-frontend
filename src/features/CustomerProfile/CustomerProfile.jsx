@@ -1,8 +1,8 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { PaymentsContainer } from '../../ui/PaymentsContainer/PaymentsContainer';
 import { getAllTicketsById } from '../../actions/tickets.action';
 import { useEffect, useState } from 'react';
-import { getSpecificCustomer } from '../../actions/customer.action';
+import { getSpecificCustomer, deleteCustomerById } from '../../actions/customer.action';
 import { StatsCard } from '../../ui/StatsCard/StatsCard';
 import { TicketsContainer } from '../../ui/TicketsContainer/TicketsContainer';
 import styles from './CustomerProfile.module.css';
@@ -13,22 +13,27 @@ import EmailIcon from "../../assets/emailIcon.svg?react";
 import MoneyBagIcon from "../../assets/moneyBagIcon.svg?react";
 import StatsIcon from "../../assets/statsAnalityc.svg?react";
 import TicketIcon from "../../assets/ticketIcon.svg?react";
+import { CustomerModal } from '../CustomerModal/CustomerModal';
+
 
 const CustomerProfile = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [profileCustomer, setProfileCustomer] = useState(null);
   const [activeCategory, setActiveCategory] = useState('resume');
   const [tickets, setAllTickets] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      const data = await getSpecificCustomer({ id })
+      setProfileCustomer(data?.data);
+    } catch (error) {
+      console.error("Error al traer la info del cliente:", error);
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getSpecificCustomer({ id })
-        setProfileCustomer(data?.data);
-      } catch (error) {
-        console.error("Error al traer la info del cliente:", error);
-      }
-    }
     fetchData();
   }, [id])
 
@@ -43,6 +48,19 @@ const CustomerProfile = () => {
     }
     fetchTickets();
   }, [id]);
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.");
+    if (confirmDelete) {
+      try {
+        await deleteCustomerById({ customerId: id });
+        navigate('/admin/customers');
+      } catch (error) {
+        console.error("Error al eliminar el cliente:", error);
+        alert("Hubo un error al intentar eliminar el cliente.");
+      }
+    }
+  }
 
   if (!profileCustomer) {
     return <div>cargando perfil...</div>
@@ -59,13 +77,20 @@ const CustomerProfile = () => {
           <div className={styles.infoActions}>
             <h2>Información General</h2>
             <div className={styles.actions}>
-              <div className={styles.edit}>
+              <div 
+                className={styles.edit}
+                onClick={() => setIsModalOpen(true)}
+              >
                 Editar<EditIcon /></div>
-              <div className={styles.delete}>
+              <div 
+                className={styles.delete}
+                onClick={handleDelete}
+              >
                 Eliminar<TrashIcon />
               </div>
             </div>
           </div>
+
           <div className={styles.separatorLine} />
           <div className={styles.bodyCard}>
             <div className={styles.presentation}>
@@ -134,6 +159,15 @@ const CustomerProfile = () => {
           />
         </div>
       </section>
+      {isModalOpen && (
+        <CustomerModal 
+          onClose={() => {
+            setIsModalOpen(false);
+            fetchData();
+          }}
+          initialData={profileCustomer}
+        />
+      )}
     </div>
   );
 };

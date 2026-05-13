@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./CustomerModal.module.css";
-import { createCustomer } from "../../actions/customer.action";
+import { createCustomer, updateCustomer } from "../../actions/customer.action";
 import AddCustomer from "../../assets/addCustomer.svg?react";
 import CustomerIcon from "../../assets/customerIcons.svg?react";
 import PhoneIcon from "../../assets/phoneCustomer.svg?react";
@@ -9,13 +9,13 @@ import TagIcon from "../../assets/tagCustomerIcon.svg?react";
 import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
 import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment.jsx";
 
-export const CustomerModal = ({ onClose }) => {
+export const CustomerModal = ({ onClose, initialData }) => {
   const [customerData, setCustomerData] = useState({
-    customerName: "",
-    email: "",
-    phone: "",
-    customerType: "",
-    customerStatusPayment: "",
+    customerName: initialData?.customerName || "",
+    email: initialData?.customerEmail || initialData?.email || "",
+    phone: initialData?.customerPhone || initialData?.phone || "",
+    customerType: initialData?.customerType || "",
+    customerStatusPayment: initialData?.customerStatusPayment || initialData?.statusPayment || "",
   });
 
   const handleChange = (e) => {
@@ -26,7 +26,6 @@ export const CustomerModal = ({ onClose }) => {
       [name]: value
     }));
   }
-
   const saveCustomer = async (e) => {
     e.preventDefault();
     const sanatizedForm = {
@@ -36,8 +35,15 @@ export const CustomerModal = ({ onClose }) => {
       customerStatusPayment: Number(customerData.customerStatusPayment)
     }
 
+
     try {
-      const response = await createCustomer(sanatizedForm);
+      let response;
+      if (initialData?.customerId) {
+        response = await updateCustomer({ id: initialData.customerId, ...sanatizedForm });
+      } else {
+        response = await createCustomer(sanatizedForm);
+      }
+
       if (response.success) {
         onClose();
       }
@@ -51,8 +57,8 @@ export const CustomerModal = ({ onClose }) => {
       <div className={styles.containerModal}>
         <div className={styles.headerModal}>
           <div className={styles.titlesModal}>
-            <h2>Registrar Cliente</h2>
-            <h3>Registro de gestión central</h3>
+            <h2>{initialData ? "Editar Cliente" : "Registrar Cliente"}</h2>
+            <h3>{initialData ? "Actualiza la información del cliente" : "Registro de gestión central"}</h3>
           </div>
           <button
             className={styles.calcelX}
@@ -127,7 +133,7 @@ export const CustomerModal = ({ onClose }) => {
             onClick={saveCustomer}
             className={styles.addCustomer}
           >
-            Guardar cliente
+            {initialData ? "Actualizar cliente" : "Guardar cliente"}
             <AddCustomer />
           </button>
         </div>

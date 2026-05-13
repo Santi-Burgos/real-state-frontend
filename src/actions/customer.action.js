@@ -52,3 +52,14 @@ export const getSpecificCustomer = async({ id }) =>{
     throw error;
   }
 }
+export const updateCustomer = async({ id, email, phone, customerName, customerType, customerStatusPayment }) =>{
+  try{
+    const res = await axiosInstance.patch(
+      `customers/${id}`,
+      { email, phone, customerName, customerType, customerStatusPayment }
+    );
+    return res.data;
+  }catch(error){
+    throw error;
+  }
+}

@@ -1,10 +1,10 @@
 .tableContainer {
   width: 100%;
   border-radius: 16px;
-  margin: 1.5rem 0;
+  margin: 27px 0;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
-
+  border: 1px solid var(--border);
 
   .table {
     width: 100%;
@@ -39,7 +39,7 @@
       }
 
       .tableCell {
-        padding: 10px 15px;        
+        padding: 10px 15px;
         color: var(--smoke-bg);
         font-size: 15px;
         vertical-align: middle;
@@ -49,54 +49,60 @@
           color: var(--black);
         }
 
-        .cellActions{
+        .descriptionText {
+          max-width: 250px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 14px;
+          opacity: 0.8;
+        }
+
+        .cellActions {
           display: flex;
           gap: 10px;
 
-          .actionsContainer{
+          .actionsContainer {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 25px;
             height: 25px;
             border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
 
-            &.view{
+            &.view {
               border: 1px solid var(--green);
 
-              &:hover{
+              &:hover {
                 background: var(--green);
-                svg{
-                  path{
-                    fill: var(--white-color);
-                  }
+
+                svg path {
+                  fill: var(--white-color);
                 }
               }
             }
 
-            &.delete{
+            &.delete {
               border: 1px solid var(--hard-red);
 
-              &:hover{
+              &:hover {
                 background: var(--hard-red);
-                svg{
-                  path{
-                    fill: var(--white-color);
-                  }
+
+                svg path {
+                  fill: var(--white-color);
                 }
               }
             }
 
-            svg{
+            svg {
               width: 15px;
               height: 15px;
-              
-              path{
+
+              path {
                 fill: var(--black);
               }
-            }
-            &:hover{
-              cursor: pointer;
             }
           }
         }
@@ -105,77 +111,64 @@
   }
 }
 
-.badge {
-  padding: 0.4rem 0.8rem;
+.badge,
+.badgeStatus {
+  padding: 7px 14px;
   border-radius: 8px;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-transform: capitalize;
   border: 1px solid transparent;
-
-  &.buyer {
-    background: rgba(34, 197, 94, 0.15);
-    color: #16a34a;
-    border-color: rgba(34, 197, 94, 0.2);
-  }
-
-  &.tenant {
-    background: rgba(36, 123, 160, 0.15);
-    color: var(--cyan);
-    border-color: rgba(36, 123, 160, 0.2);
-  }
+  min-width: 80px;
 }
 
-.badgePayment{
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: capitalize;
-  border: 1px solid transparent;
-
-  &.pending{
-    color: var(--smoke-bg);
-    background-color: var(--text);
-  }
-  
-  &.unpaid{
-    color: var(--hard-red);
-    background-color: var(--hard-red-ligth);
-  }
-
-  &.paid{
+.badgeStatus {
+  &.open {
+    background: var(--green-ligth);
     color: var(--green);
-    background-color: var(--green-ligth);
+    border-color: rgba(11, 80, 57, 0.2);
   }
 
+  &.in_progress {
+    background: var(--cyan-ligth);
+    color: var(--white-color);
+    border-color: var(--cyan);
+  }
+
+  &.closed {
+    background: rgba(65, 81, 86, 0.1);
+    color: var(--smoke-bg);
+    border-color: var(--smoke-bg);
+  }
 }
 
-.editable {
-  cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
-
-  &:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
+.badge {
+  &.maintenance {
+    background: var(--cyan-ligth);
+    color: var(--white-color);
   }
 
-  &:active {
-    transform: scale(0.95);
+  &.support {
+    background: rgba(245, 245, 220, 0.2);
+    color: #b5b591;
+    border-color: var(--beish);
+  }
+
+  &.complaint {
+    background: var(--hard-red-ligth);
+    color: var(--hard-red);
+    border-color: var(--hard-red);
   }
 }
 
 .emptyMessage {
-  padding: 3rem;
+  padding: 54px;
   text-align: center;
   color: var(--text);
-  font-size: 1.1rem;
+  font-size: 20px;
   opacity: 0.7;
 }
 
@@ -192,7 +185,7 @@
 
 .counter {
   color: var(--black);
-  font-size: 0.85rem;
+  font-size: 15px;
   font-weight: 500;
 }
 
@@ -212,18 +205,12 @@
       align-items: center;
       justify-content: center;
       border-radius: 8px;
-      font-size: 0.85rem;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
       color: var(--black);
       border: 1px solid var(--border);
-
-      &:hover {
-        background: var(--hard-red-ligth);
-        color: var(--white-color);
-        border: var(--white-color);
-      }
 
       &.active {
         background: var(--hard-red);
@@ -236,7 +223,7 @@
   .pageBtn {
     padding: 5px;
     border-radius: 8px;
-    font-size: 0.85rem;
+    font-size: 15px;
     font-weight: 600;
     background: var(--white-color);
     border: 1px solid var(--border);
@@ -244,22 +231,9 @@
     cursor: pointer;
     transition: all 0.2s ease;
 
-    &:hover:not(:disabled) {
-      background: var(--accent-bg);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
-  }
-}
-
-@media (max-width: 768px) {
-  .headerCell,
-  .tableCell {
-    padding: 1rem;
   }
 }

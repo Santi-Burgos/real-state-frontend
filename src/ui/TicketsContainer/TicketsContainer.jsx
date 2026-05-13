@@ -15,7 +15,7 @@ export const TicketsContainer = ({ data = [] }) => {
                 <div className={` ${styles.statusBadge} ${styles[t.ticketStatusId.toLowerCase()]}`}>
                   {t.ticketStatusId}
                 </div>
-                <div>
+                <div> 
                   #{t.ticketDisplayId}
                 </div>
               </div>

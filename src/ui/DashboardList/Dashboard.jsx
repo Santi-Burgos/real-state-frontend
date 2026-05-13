@@ -1,1 +1,0 @@
-//Maquetado para lista en formato lista;

@@ -4,7 +4,8 @@ import TagIcon from "../../assets/tagCustomerIcon.svg?react";
 export const CustomerSelector = ({
   value,
   onChange,
-  customStyle = {}
+  customStyle = {},
+  ...props
 }) =>{
   return(
     <div className={styles.inputWrapper}
@@ -15,6 +16,7 @@ export const CustomerSelector = ({
         name="customerType"
         value={value}
         onChange={onChange}
+        {...props}
       >
         <option value="" disabled>Seleccione un tipo</option>
         <option value="1">Inquilino</option>

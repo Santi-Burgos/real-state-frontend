@@ -4,7 +4,7 @@ import styles from "./CustomerView.module.css";
 import { StatsCard } from "../../ui/StatsCard/StatsCard";
 import IconCustomer from "../../assets/customers.svg?react";
 import { CustomerTable } from "../../ui/CustomerTable/CustomerTable";
-import { deleteCustomerById, getAllCustomer } from "../../actions/customer.action";
+import { deleteCustomerById, getAllCustomer, updateCustomer } from "../../actions/customer.action";
 import { CustomerModal } from "../CustomerModal/CustomerModal";
 import AddButtonIcon from "../../assets/addButtonIcon.svg?react";
 import SearchIcon from "../../assets/searchIcon.svg?react";
@@ -24,6 +24,7 @@ export const CustomerView = () =>{
   const [dataTypeFilter, setDataTypeFilter] = useState("");
   const [valueToggleOrder, setToggleOrder] = useState("asc"); 
   const [totalCustomers, setTotalCustomers] = useState('');   
+  const [refresh, setRefresh] = useState(0);
 
   const toggleModalCustomer = (e) => {
     setShowForm(!showForm);
@@ -57,9 +58,19 @@ export const CustomerView = () =>{
 
   const handleDeleteCall = async(customerId) =>{
     try{
-      const data = await deleteCustomerById({customerId})
+      await deleteCustomerById({customerId})
+      setRefresh(prev => prev + 1);
     }catch(error){
       console.log(error);
+    }
+  }
+
+  const handleUpdateCall = async(id, newData) => {
+    try {
+      await updateCustomer({ id, ...newData });
+      setRefresh(prev => prev + 1);
+    } catch (error) {
+      console.error("Error updating customer:", error);
     }
   }
 
@@ -86,7 +97,7 @@ export const CustomerView = () =>{
       }
     };
     fetchData();
-  }, [valueFilter, selectorFilter, valueToggleOrder]);
+  }, [valueFilter, selectorFilter, valueToggleOrder, refresh]);
 
   return (
     <>
@@ -180,7 +191,9 @@ export const CustomerView = () =>{
             data={dataCustomer}
             actionDelete={handleDeleteCall}
             actionView={handleViewCall}
+            actionUpdate={handleUpdateCall}
           />
+
           {showForm &&
             <CustomerModal
               onClose={toggleModalCustomer}

@@ -1,8 +1,27 @@
+import { useState } from 'react';
 import styles from './CustomerTable.module.css';
 import TrashIcon from "../../assets/trashIcon.svg?react";
 import EyesIcon from "../../assets/lockPasswordIcon.svg?react";
+import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
+import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment";
 
-export const CustomerTable = ({ data, actionDelete, actionView }) => {
+export const CustomerTable = ({ data, actionDelete, actionView, actionUpdate }) => {
+  const [editing, setEditing] = useState({ id: null, field: null });
+
+  const typeMapping = {
+    "tenant": "1",
+    "buyer": "2",
+    "potencial inquilino": "3",
+    "potencial comprador": "4",
+    "customer": "5"
+  };
+
+  const statusMapping = {
+    "pending": "1",
+    "unpaid": "2",
+    "paid": "3"
+  };
+
   const handleTableClick = (e) => {
     const actionBtn = e.target.closest('[data-action]');
     const cellWithId = e.target.closest('[data-customer-id]');
@@ -14,6 +33,22 @@ export const CustomerTable = ({ data, actionDelete, actionView }) => {
 
     if (action === 'delete') actionDelete(customerId);
     if (action === 'view') actionView(customerId);
+  };
+
+  const handleUpdate = (id, field, value, customer) => {
+    const sanatizedForm = {
+      customerName: customer.customerName,
+      email: customer.customerEmail,
+      phone: Number(customer.customerPhone),
+      customerType: field === 'customerType' ? Number(value) : (typeMapping[customer.customerType.toLowerCase()] || customer.customerType),
+      customerStatusPayment: field === 'customerStatusPayment' ? Number(value) : (statusMapping[customer.customerStatusPayment.toLowerCase()] || customer.customerStatusPayment),
+    };
+
+    sanatizedForm.customerType = Number(sanatizedForm.customerType);
+    sanatizedForm.customerStatusPayment = Number(sanatizedForm.customerStatusPayment);
+
+    actionUpdate(id, sanatizedForm);
+    setEditing({ id: null, field: null });
   };
 
   return (
@@ -37,15 +72,41 @@ export const CustomerTable = ({ data, actionDelete, actionView }) => {
                 <td className={styles.tableCell}>{d.customerEmail}</td>
                 <td className={styles.tableCell}>{d.customerPhone}</td>
                 <td className={styles.tableCell}>
-                  <span className={`${styles.badge} ${styles[d.customerType.toLowerCase()]}`}>
-                    {d.customerType.toLowerCase()}
-                  </span>
+                  {editing.id === d.customerId && editing.field === 'customerType' ? (
+                    <CustomerSelector
+                      value={typeMapping[d.customerType.toLowerCase()] || d.customerType}
+                      onChange={(e) => handleUpdate(d.customerId, 'customerType', e.target.value, d)}
+                      onBlur={() => setEditing({ id: null, field: null })}
+                      autoFocus
+                      customStyle={{ width: '100%' }}
+                    />
+                  ) : (
+                    <span
+                      className={`${styles.badge} ${styles[d.customerType.toLowerCase()] || ""} ${styles.editable}`}
+                      onClick={() => setEditing({ id: d.customerId, field: 'customerType' })}
+                    >
+                      {d.customerType.toLowerCase()}
+                    </span>
+                  )}
                 </td>
                 <td className={styles.tableCell}>
-                  <span className={`${styles.badgePayment} ${styles[d.customerStatusPayment.toLowerCase()]}`}>
-                    {d.customerStatusPayment.toLowerCase() != "null"
-                      ? d.customerStatusPayment.toLowerCase() : "-"}
-                  </span>
+                  {editing.id === d.customerId && editing.field === 'customerStatusPayment' ? (
+                    <SelectorPaymentStatus
+                      value={statusMapping[d.customerStatusPayment.toLowerCase()] || d.customerStatusPayment}
+                      onChange={(e) => handleUpdate(d.customerId, 'customerStatusPayment', e.target.value, d)}
+                      onBlur={() => setEditing({ id: null, field: null })}
+                      autoFocus
+                      customStyle={{ width: '100%' }}
+                    />
+                  ) : (
+                    <span
+                      className={`${styles.badgePayment} ${styles[d.customerStatusPayment.toLowerCase()] || ""} ${styles.editable}`}
+                      onClick={() => setEditing({ id: d.customerId, field: 'customerStatusPayment' })}
+                    >
+                      {d.customerStatusPayment.toLowerCase() != "null"
+                        ? d.customerStatusPayment.toLowerCase() : "-"}
+                    </span>
+                  )}
                 </td>
                 <td className={styles.tableCell} data-customer-id={d.customerId}>
                   <div className={styles.cellActions}>
@@ -65,13 +126,15 @@ export const CustomerTable = ({ data, actionDelete, actionView }) => {
             ))
           ) : (
             <tr>
-              <td colSpan="4" className={styles.emptyMessage}>
+              <td colSpan="6" className={styles.emptyMessage}>
                 Agrega un cliente para verlo
               </td>
             </tr>
           )}
         </tbody>
       </table>
+
+
       <div className={styles.tableFooter}>
         <div className={styles.counter}>
           Mostrando 1 - {data?.length || 0} de {data?.length || 0} resultados

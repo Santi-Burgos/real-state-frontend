@@ -4,9 +4,9 @@ import TagMoney from "../../assets/tagMoneyIcon.svg?react";
 export const SelectorPaymentStatus = ({
   onChange, 
   value, 
-  customStyle = {}
+  customStyle = {},
+  ...props
 }) =>{
-  console.log(value)
   return(
     <div className={styles.inputWrapper} style={customStyle}>
       <TagMoney  className={styles.inputIcon}/>
@@ -15,6 +15,7 @@ export const SelectorPaymentStatus = ({
         name="customerStatusPayment"
         onChange={onChange}
         value={value}
+        {...props}
       >
         <option value="" disabled>Estado de pago</option>
         <option value="1">Pendiente</option>

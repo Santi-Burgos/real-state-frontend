@@ -1,0 +1,138 @@
+.ticketsViewContainer {
+  padding: 0px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+
+  .content {
+    margin: 16px;
+    .loading {
+      text-align: center;
+      padding: 90px;
+      font-size: 21px;
+      color: var(--text);
+      font-style: italic;
+    }
+  }
+}
+
+.containerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px;
+
+  p {
+    margin: 0px;
+    span {
+      color: var(--cyan);
+    }
+  }
+
+  .addTicket {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--cyan);
+    border: none;
+    color: var(--white-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+
+    svg {
+      width: 15px;
+      height: 15px;
+      path {
+        fill: var(--white-color);
+      }
+    }
+  }
+}
+
+.containerFilters {
+  display: flex;
+  gap: 10px;
+  margin: 16px;
+
+  .searchBar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 60%;
+
+    .inputIcon {
+      left: 8px;
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+      position: absolute;
+    }
+
+    input {
+      height: 35px;
+      padding: 0 10px 0 32px;
+      background: var(--white-color);
+      border: 1px solid var(--text);
+      color: var(--black);
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      width: 100%;
+    
+      &:focus {
+        border: 1px solid var(--black);
+        box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+      }
+    } 
+  }
+
+  .selectorFilter {
+    display: flex;
+    align-items: center;
+    position: relative;
+    
+    .selectorIcon {
+      position: absolute; 
+      left: 10px;        
+      width: 18px;      
+      height: 18px;
+      z-index: 10;    
+      pointer-events: none;
+
+      path {
+        fill: var(--black);
+      }
+    }
+
+    select {
+      padding: 0 10px 0 32px;
+      background: var(--white-color);
+      border: 1px solid var(--black);
+      color: var(--black);
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      height: 35px;
+      cursor: pointer;
+      min-width: 180px;
+
+      &:focus {
+        border-color: var(--cyan);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .containerFilters {
+    flex-direction: column;
+    .searchBar { width: 100%; }
+    .selectorFilter { width: 100%; select { width: 100%; } }
+  }
+}
