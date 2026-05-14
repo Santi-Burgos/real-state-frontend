@@ -5,17 +5,6 @@
   animation: fadeIn 0.5s ease-out;
 }
 
-.header {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0;
-}
-
 .subtitle {
   color: #888;
   margin-top: 0.5rem;
@@ -34,17 +23,17 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   transition: transform 0.3s ease;
-  
-  .separatorLine{
+
+  .separatorLine {
     height: 1px;
-    background: var(--cyan); 
+    background: var(--cyan);
   }
 
   &:hover {
     transform: translateY(-5px);
   }
-  
-  .infoActions{
+
+  .infoActions {
     display: flex;
     justify-content: space-between;
 
@@ -53,11 +42,11 @@
       font-weight: 600;
     }
 
-    .actions{
+    .actions {
       gap: 5px;
       display: flex;
 
-      .edit{
+      .edit {
         height: 35px;
         padding: 0px 5px;
         display: flex;
@@ -70,16 +59,17 @@
         color: var(--white-color);
         cursor: pointer;
 
-        svg{
+        svg {
           width: 20px;
           height: 20px;
-          path{
+
+          path {
             fill: var(--white-color);
           }
         }
       }
 
-      .delete{
+      .delete {
         background: var(--hard-red-ligth);
         border: 1px solid var(--hard-red);
         height: 35px;
@@ -92,64 +82,65 @@
         color: var(--white-color);
         cursor: pointer;
 
-        svg{
+        svg {
           width: 20px;
           height: 20px;
-          path{
+
+          path {
             fill: var(--white-color);
           }
         }
       }
     }
   }
-  
+
   p {
     color: #ccc;
     line-height: 1.6;
   }
 
-  .bodyCard{
+  .bodyCard {
     padding: 10px;
     display: flex;
     gap: 10px;
     flex-direction: column;
 
-    .presentation{
+    .presentation {
       display: flex;
       gap: 10px;
       font-size: 22px;
       align-items: center;
-  
-      .customerTypeContainer{
+
+      .customerTypeContainer {
         padding: 5px;
         font-weight: 700;
-  
-        &.tenant{
+
+        &.tenant {
           background: var(--cyan-ligth);
           border: var(--cyan);
           color: var(--white-color);
         }
-  
-        &.buyer{
+
+        &.buyer {
           border: 1px solid var(--green);
           background: var(--green-ligth);
           color: var(--green);
         }
       }
     }
-  
-    .extraData{
+
+    .extraData {
       display: flex;
       gap: 50px;
       font-size: 20px;
       align-items: center;
 
 
-      .containerIndividualData{
+      .containerIndividualData {
         display: flex;
         gap: 10px;
 
-        .containerIconData{
+        .containerIconData {
           background: var(--text);
           display: flex;
           align-items: center;
@@ -157,7 +148,7 @@
           border-radius: 6px;
           padding: 5px;
 
-          svg{
+          svg {
             width: 15px;
             height: 15px;
             fill: var(--white-color);
@@ -170,17 +161,17 @@
       }
     }
 
-    .containerStatus{
+    .containerStatus {
       display: flex;
       gap: 10px;
       flex-direction: column;
 
-      .billingState{
+      .billingState {
         gap: 10px;
         display: flex;
         align-items: center;
 
-        .pending{
+        .pending {
           background: var(--text);
           border: var(--smoke-bg);
           color: var(--white-color);
@@ -189,8 +180,8 @@
           display: flex;
           border-radius: 10px 0px 10px 0px;
         }
-  
-        .unpaid{
+
+        .unpaid {
           background: var(--hard-red-ligth);
           border: var(--hard-red);
           color: var(--white-color);
@@ -199,8 +190,8 @@
           display: flex;
           border-radius: 10px 0px 10px 0px;
         }
-        
-        .paid{
+
+        .paid {
           background: var(--green-ligth);
           border: var(--green);
           color: var(--white-color);
@@ -211,12 +202,13 @@
         }
 
       }
-      .billingPeriod{
+
+      .billingPeriod {
         gap: 10px;
         display: flex;
         align-items: center;
 
-        .date{
+        .date {
           border-radius: 5px;
           justify-content: center;
           display: flex;
@@ -242,7 +234,7 @@
   font-style: italic;
 }
 
-.containerKPI{
+.containerKPI {
   margin: 30px 0px 10px 0px;
   display: flex;
   gap: 10px;
@@ -287,8 +279,8 @@
       color: var(--cyan);
       border-bottom: 2px solid var(--cyan);
 
-      svg{
-        path{
+      svg {
+        path {
           fill: var(--cyan);
         }
       }
@@ -296,7 +288,7 @@
   }
 }
 
-.containerContent{
+.containerContent {
   display: flex;
   gap: 15px;
   justify-content: space-between;
@@ -308,6 +300,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

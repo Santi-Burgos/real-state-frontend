@@ -36,16 +36,25 @@ export const CustomerTable = ({ data, actionDelete, actionView, actionUpdate }) 
   };
 
   const handleUpdate = (id, field, value, customer) => {
-    const sanatizedForm = {
-      customerName: customer.customerName,
-      email: customer.customerEmail,
-      phone: Number(customer.customerPhone),
-      customerType: field === 'customerType' ? Number(value) : (typeMapping[customer.customerType.toLowerCase()] || customer.customerType),
-      customerStatusPayment: field === 'customerStatusPayment' ? Number(value) : (statusMapping[customer.customerStatusPayment.toLowerCase()] || customer.customerStatusPayment),
+    const getSanitizedValue = (fieldName, newValue) => {
+      const originalValue = customer[fieldName];
+      return newValue == originalValue ? null : newValue;
     };
+    const newType = field === 'customerType' 
+      ? Number(value) 
+      : (typeMapping[customer.customerType.toLowerCase()] || customer.customerType);
 
-    sanatizedForm.customerType = Number(sanatizedForm.customerType);
-    sanatizedForm.customerStatusPayment = Number(sanatizedForm.customerStatusPayment);
+    const newStatus = field === 'customerStatusPayment' 
+      ? Number(value) 
+      : (statusMapping[customer.customerStatusPayment.toLowerCase()] || customer.customerStatusPayment);
+
+    const sanatizedForm = {
+      customerName: getSanitizedValue('customerName', customer.customerName),
+      email: getSanitizedValue('customerEmail', customer.customerEmail),
+      phone: getSanitizedValue('customerPhone', Number(customer.customerPhone)),
+      customerType: getSanitizedValue('customerType', Number(newType)),
+      customerStatusPayment: getSanitizedValue('customerStatusPayment', Number(newStatus)),
+    };
 
     actionUpdate(id, sanatizedForm);
     setEditing({ id: null, field: null });

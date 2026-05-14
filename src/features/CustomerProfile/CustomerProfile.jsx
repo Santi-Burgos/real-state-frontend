@@ -14,6 +14,7 @@ import MoneyBagIcon from "../../assets/moneyBagIcon.svg?react";
 import StatsIcon from "../../assets/statsAnalityc.svg?react";
 import TicketIcon from "../../assets/ticketIcon.svg?react";
 import { CustomerModal } from '../CustomerModal/CustomerModal';
+import { ViewHeader } from '../../ui/ViewHeader/ViewHeader';
 
 
 const CustomerProfile = () => {
@@ -69,9 +70,11 @@ const CustomerProfile = () => {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Perfil del Cliente</h1>
-      </header>
+      <ViewHeader
+        breadcrumb="admin > customers > profile"
+        title="Perfil del Cliente"
+        description={`Gestionando el perfil de ${profileCustomer?.customerName || 'Cliente'}`}
+      />
       <div className={styles.content}>
         <div className={styles.card}>
           <div className={styles.infoActions}>

@@ -5,6 +5,7 @@ import styles from "./TicketsView.module.css";
 import SearchIcon from "../../assets/searchIcon.svg?react";
 import SliderDJIcon from "../../assets/sliderDJIcon.svg?react";
 import AddButtonIcon from "../../assets/addButtonIcon.svg?react";
+import { ViewHeader } from "../../ui/ViewHeader/ViewHeader";
 
 export const TicketsView = () => {
   const [dataTicket, setDataTicket] = useState([]);
@@ -30,9 +31,11 @@ export const TicketsView = () => {
 
   return (
     <div className={styles.ticketsViewContainer}>
-      <header className={styles.containerHeader}>
-        <p>Admin / <span>Tickets</span></p>
-      </header>
+      <ViewHeader
+        breadcrumb="admin > tickets"
+        title="Tickets"
+        description="Gestiona las solicitudes y problemas de tus clientes"
+      />
 
       <section className={styles.containerFilters}>
         <div className={styles.searchBar}>

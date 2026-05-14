@@ -16,36 +16,30 @@
   }
 }
 
-.containerHeader {
-  display: flex;
+.addTicket {
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: var(--cyan);
+  color: white;
+  border: none;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 16px;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
 
-  p {
-    margin: 0px;
-    span {
-      color: var(--cyan);
-    }
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    filter: brightness(1.1);
   }
 
-  .addTicket {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: var(--cyan);
-    border: none;
-    color: var(--white-color);
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-
-    svg {
-      width: 15px;
-      height: 15px;
-      path {
-        fill: var(--white-color);
-      }
+  svg {
+    width: 15px;
+    height: 15px;
+    path {
+      fill: var(--white-color);
     }
   }
 }

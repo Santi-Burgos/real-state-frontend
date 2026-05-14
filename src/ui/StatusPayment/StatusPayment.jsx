@@ -21,6 +21,7 @@ export const SelectorPaymentStatus = ({
         <option value="1">Pendiente</option>
         <option value="2">Deudor</option>
         <option value="3">Abonado</option>
+        <option value="4">No facturable</option>
       </select>
     </div>
   );

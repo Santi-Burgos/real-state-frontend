@@ -11,6 +11,7 @@ import SearchIcon from "../../assets/searchIcon.svg?react";
 import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
 import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment";
 import SliderDJIcon from "../../assets/sliderDJIcon.svg?react"
+import { ViewHeader } from "../../ui/ViewHeader/ViewHeader";
 
 export const CustomerView = () =>{
   const navigate = useNavigate();
@@ -101,8 +102,11 @@ export const CustomerView = () =>{
 
   return (
     <>
-      <section className={styles.containerHeader}>
-        <p>Admin / <span>Customer</span></p>
+      <ViewHeader
+        breadcrumb="admin > customers"
+        title="Customers"
+        description="Central donde gestionaras tus clientes"
+      >
         <button
           className={styles.addCustomer}
           onClick={toggleModalCustomer}
@@ -110,7 +114,7 @@ export const CustomerView = () =>{
           Agregar Customer
           <AddButtonIcon />
         </button>
-      </section>
+      </ViewHeader>
       <div className={styles.statsSection}>
         <div className={styles.cardContainer}>
           <StatsCard
