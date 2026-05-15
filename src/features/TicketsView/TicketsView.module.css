@@ -4,8 +4,17 @@
   margin: 0 auto;
   animation: fadeIn 0.5s ease-out;
 
+  .containerStats {
+    padding: 24px 16px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
   .content {
     margin: 16px;
+
     .loading {
       text-align: center;
       padding: 90px;
@@ -38,6 +47,7 @@
   svg {
     width: 15px;
     height: 15px;
+
     path {
       fill: var(--white-color);
     }
@@ -46,8 +56,10 @@
 
 .containerFilters {
   display: flex;
-  gap: 10px;
-  margin: 16px;
+  gap: 16px;
+  margin: 24px 16px;
+  padding: 16px;
+  border-radius: 12px;
 
   .searchBar {
     position: relative;
@@ -73,25 +85,25 @@
       font-size: 14px;
       outline: none;
       width: 100%;
-    
+
       &:focus {
         border: 1px solid var(--black);
-        box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
       }
-    } 
+    }
   }
 
   .selectorFilter {
     display: flex;
     align-items: center;
     position: relative;
-    
+
     .selectorIcon {
-      position: absolute; 
-      left: 10px;        
-      width: 18px;      
+      position: absolute;
+      left: 10px;
+      width: 18px;
       height: 18px;
-      z-index: 10;    
+      z-index: 10;
       pointer-events: none;
 
       path {
@@ -119,14 +131,31 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
   .containerFilters {
     flex-direction: column;
-    .searchBar { width: 100%; }
-    .selectorFilter { width: 100%; select { width: 100%; } }
+
+    .searchBar {
+      width: 100%;
+    }
+
+    .selectorFilter {
+      width: 100%;
+
+      select {
+        width: 100%;
+      }
+    }
   }
 }

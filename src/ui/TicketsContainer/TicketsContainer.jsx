@@ -1,7 +1,6 @@
 import styles from './TicketsContainer.module.css';
 
 export const TicketsContainer = ({ data = [] }) => {
-  console.log(data)
   return (
     <div className={styles.ContainerTickets}>
       <div className={styles.headerTickets}>
@@ -15,7 +14,7 @@ export const TicketsContainer = ({ data = [] }) => {
                 <div className={` ${styles.statusBadge} ${styles[t.ticketStatusId.toLowerCase()]}`}>
                   {t.ticketStatusId}
                 </div>
-                <div> 
+                <div>
                   #{t.ticketDisplayId}
                 </div>
               </div>

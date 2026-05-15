@@ -3,17 +3,16 @@ import { TicketsTable } from "../../ui/TicketsTable/TicketsTable";
 import { useState, useEffect, useMemo } from "react";
 import styles from "./TicketsView.module.css";
 import SearchIcon from "../../assets/searchIcon.svg?react";
-import SliderDJIcon from "../../assets/sliderDJIcon.svg?react";
-import AddButtonIcon from "../../assets/addButtonIcon.svg?react";
 import { ViewHeader } from "../../ui/ViewHeader/ViewHeader";
 import { StatsCard } from "../../ui/StatsCard/StatsCard";
+import { TicketStatusSelector, TicketTypeSelector } from "../../ui/TicketsSelector/TicketsSelector";
 
 export const TicketsView = () => {
   const [dataTicket, setDataTicket] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("ALL");
-  const [typeFilter, setTypeFilter] = useState("ALL");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
   const [countsTickets, setCountsTickets] = useState(null);
 
   useEffect(() => {
@@ -21,11 +20,10 @@ export const TicketsView = () => {
       try {
         setLoading(true);
         const data = await getAllTickets({
-          type: null,
-          valueSelector: null,
+          typeValue: typeFilter === "" ? null : typeFilter,
+          selector: statusFilter === "" ? null : statusFilter,
         });
         setDataTicket(data?.tickets || data || []);
-        console.log(data?.counts)
         setCountsTickets(data?.counts);
       } catch (error) {
         console.error("Error al traer los tickets: ", error);
@@ -34,7 +32,19 @@ export const TicketsView = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [statusFilter, typeFilter]);
+
+  const filteredTickets = useMemo(() => {
+    if (!dataTicket) return [];
+    return dataTicket.filter((ticket) => {
+      const searchLower = searchTerm.toLowerCase();
+      const matchesId = ticket.ticketDisplayId?.toString().includes(searchLower);
+      const matchesTitle = ticket.title?.toLowerCase().includes(searchLower);
+      const matchesDescription = ticket.description?.toLowerCase().includes(searchLower);
+
+      return matchesId || matchesTitle || matchesDescription;
+    });
+  }, [dataTicket, searchTerm]);
 
   return (
     <div className={styles.ticketsViewContainer}>
@@ -43,22 +53,22 @@ export const TicketsView = () => {
         title="Tickets"
         description="Gestiona las solicitudes y problemas de tus clientes"
       />
-      <section> 
-        <StatsCard 
-          nameCard = {"Ticket Totales"} 
-          numberCard = {countsTickets?.ticketsQuantity}
+      <section className={styles.containerStats}>
+        <StatsCard
+          nameCard={"Ticket Totales"}
+          numberCard={countsTickets?.ticketsQuantity}
         />
-        <StatsCard 
-          nameCard = {"Ticket Pendiente Totales"} 
-          numberCard = {countsTickets?.ticketsPending}
+        <StatsCard
+          nameCard={"Ticket Pendiente Totales"}
+          numberCard={countsTickets?.ticketsPending}
         />
-        <StatsCard 
-          nameCard = {"Ticket en progreso Totales"} 
-          numberCard = {countsTickets?.ticketsInProgress}
+        <StatsCard
+          nameCard={"Ticket en progreso Totales"}
+          numberCard={countsTickets?.ticketsInProgress}
         />
-        <StatsCard 
-          nameCard = {"Ticket resuelto Totales"} 
-          numberCard = {countsTickets?.ticketsResolve}
+        <StatsCard
+          nameCard={"Ticket resuelto Totales"}
+          numberCard={countsTickets?.ticketsResolve}
         />
       </section>
       <section className={styles.containerFilters}>
@@ -71,39 +81,23 @@ export const TicketsView = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        
-        <div className={styles.selectorFilter}>
-          <SliderDJIcon className={styles.selectorIcon} />
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-          >
-            <option value="ALL">Todos los Estados</option>
-            <option value="OPEN">Abierto</option>
-            <option value="IN_PROGRESS">En Progreso</option>
-            <option value="CLOSED">Cerrado</option>
-          </select>
-        </div>
 
-        <div className={styles.selectorFilter}>
-          <SliderDJIcon className={styles.selectorIcon} />
-          <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-          >
-            <option value="ALL">Todos los Tipos</option>
-            <option value="MAINTENANCE">Mantenimiento</option>
-            <option value="SUPPORT">Soporte</option>
-            <option value="COMPLAINT">Reclamo</option>
-          </select>
-        </div>
+        <TicketStatusSelector
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        />
+
+        <TicketTypeSelector
+          value={typeFilter}
+          onChange={(e) => setTypeFilter(e.target.value)}
+        />
       </section>
 
       <main className={styles.content}>
         {loading ? (
           <div className={styles.loading}>Cargando tickets...</div>
         ) : (
-          <TicketsTable data={dataTicket}/>
+          <TicketsTable data={filteredTickets} />
         )}
       </main>
     </div>

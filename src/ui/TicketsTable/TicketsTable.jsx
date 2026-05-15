@@ -15,15 +15,26 @@ export const TicketsTable = ({ data = [] }) => {
 
   const getStatusLabel = (status) => {
     const labels = {
+      1: "Pendiente",
+      2: "En Progreso",
+      3: "Resuelto",
+      4: "Rechazado",
       OPEN: "Abierto",
+      PENDING: "Pendiente",
       IN_PROGRESS: "En Progreso",
-      CLOSED: "Cerrado",
+      RESOLVED: "Resuelto",
+      REJECTED: "Rechazado",
+      CLOSED: "Rechazado",
+      REJECT: "Rechazado",
     };
     return labels[status] || status;
   };
 
   const getTypeLabel = (type) => {
     const labels = {
+      1: "Mantenimiento",
+      2: "Soporte",
+      3: "Reclamo",
       MAINTENANCE: "Mantenimiento",
       SUPPORT: "Soporte",
       COMPLAINT: "Reclamo",
@@ -53,12 +64,12 @@ export const TicketsTable = ({ data = [] }) => {
                 <td className={styles.tableCell}>{formatDate(ticket.createdAt)}</td>
                 <td className={styles.tableCell}>{ticket.title}</td>
                 <td className={styles.tableCell}>
-                  <span className={`${styles.badge} ${styles[ticket.ticketTypeId?.toLowerCase()]}`}>
+                  <span className={`${styles.badge} ${styles[`type_${ticket.ticketTypeId}`] || styles[ticket.ticketTypeId?.toLowerCase()]}`}>
                     {getTypeLabel(ticket.ticketTypeId)}
                   </span>
                 </td>
                 <td className={styles.tableCell}>
-                  <span className={`${styles.badgeStatus} ${styles[ticket.ticketStatusId?.toLowerCase()]}`}>
+                  <span className={`${styles.badgeStatus} ${styles[`status_${ticket.ticketStatusId}`] || styles[ticket.ticketStatusId?.toLowerCase()]}`}>
                     {getStatusLabel(ticket.ticketStatusId)}
                   </span>
                 </td>

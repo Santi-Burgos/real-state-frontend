@@ -126,38 +126,55 @@
 }
 
 .badgeStatus {
-  &.open {
-    background: var(--green-ligth);
-    color: var(--green);
-    border-color: rgba(11, 80, 57, 0.2);
+  &.open,
+  &.status_1,
+  &.pending {
+    background: rgba(255, 193, 7, 0.1);
+    color: #ff9800;
+    border-color: rgba(255, 152, 0, 0.3);
   }
 
-  &.in_progress {
+  &.in_progress,
+  &.status_2 {
     background: var(--cyan-ligth);
     color: var(--white-color);
     border-color: var(--cyan);
   }
 
-  &.closed {
-    background: rgba(65, 81, 86, 0.1);
-    color: var(--smoke-bg);
-    border-color: var(--smoke-bg);
+  &.status_3,
+  &.resolved,
+  &.resolve {
+    background: var(--green-ligth);
+    color: var(--green);
+    border-color: rgba(11, 80, 57, 0.2);
+  }
+
+  &.closed,
+  &.status_4,
+  &.rejected,
+  &.reject {
+    background: var(--hard-red-ligth);
+    color: var(--hard-red);
+    border-color: var(--hard-red);
   }
 }
 
 .badge {
-  &.maintenance {
+  &.maintenance,
+  &.type_1 {
     background: var(--cyan-ligth);
     color: var(--white-color);
   }
 
-  &.support {
+  &.support,
+  &.type_2 {
     background: rgba(245, 245, 220, 0.2);
     color: #b5b591;
     border-color: var(--beish);
   }
 
-  &.complaint {
+  &.complaint,
+  &.type_3 {
     background: var(--hard-red-ligth);
     color: var(--hard-red);
     border-color: var(--hard-red);
