@@ -6,6 +6,7 @@ import SearchIcon from "../../assets/searchIcon.svg?react";
 import SliderDJIcon from "../../assets/sliderDJIcon.svg?react";
 import AddButtonIcon from "../../assets/addButtonIcon.svg?react";
 import { ViewHeader } from "../../ui/ViewHeader/ViewHeader";
+import { StatsCard } from "../../ui/StatsCard/StatsCard";
 
 export const TicketsView = () => {
   const [dataTicket, setDataTicket] = useState([]);
@@ -13,13 +14,19 @@ export const TicketsView = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [typeFilter, setTypeFilter] = useState("ALL");
+  const [countsTickets, setCountsTickets] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getAllTickets();
-        setDataTicket(data?.data || data || []);
+        const data = await getAllTickets({
+          type: null,
+          valueSelector: null,
+        });
+        setDataTicket(data?.tickets || data || []);
+        console.log(data?.counts)
+        setCountsTickets(data?.counts);
       } catch (error) {
         console.error("Error al traer los tickets: ", error);
       } finally {
@@ -36,7 +43,24 @@ export const TicketsView = () => {
         title="Tickets"
         description="Gestiona las solicitudes y problemas de tus clientes"
       />
-
+      <section> 
+        <StatsCard 
+          nameCard = {"Ticket Totales"} 
+          numberCard = {countsTickets?.ticketsQuantity}
+        />
+        <StatsCard 
+          nameCard = {"Ticket Pendiente Totales"} 
+          numberCard = {countsTickets?.ticketsPending}
+        />
+        <StatsCard 
+          nameCard = {"Ticket en progreso Totales"} 
+          numberCard = {countsTickets?.ticketsInProgress}
+        />
+        <StatsCard 
+          nameCard = {"Ticket resuelto Totales"} 
+          numberCard = {countsTickets?.ticketsResolve}
+        />
+      </section>
       <section className={styles.containerFilters}>
         <div className={styles.searchBar}>
           <SearchIcon className={styles.inputIcon} />
