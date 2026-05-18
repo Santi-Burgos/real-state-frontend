@@ -25,3 +25,12 @@ export const getAllTickets = async ({ typeValue, selector } = {}) => {
     throw error;
   }
 }
+
+export const deleteTicket = async (id) => {
+  try {
+    const res = await axiosInstance.delete(`tickets/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

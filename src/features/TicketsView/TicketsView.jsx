@@ -1,4 +1,4 @@
-import { getAllTickets } from "../../actions/tickets.action";
+import { getAllTickets, deleteTicket } from "../../actions/tickets.action";
 import { TicketsTable } from "../../ui/TicketsTable/TicketsTable";
 import { useState, useEffect, useMemo } from "react";
 import styles from "./TicketsView.module.css";
@@ -6,6 +6,7 @@ import SearchIcon from "../../assets/searchIcon.svg?react";
 import { ViewHeader } from "../../ui/ViewHeader/ViewHeader";
 import { StatsCard } from "../../ui/StatsCard/StatsCard";
 import { TicketStatusSelector, TicketTypeSelector } from "../../ui/TicketsSelector/TicketsSelector";
+import { useToast } from "../../context/ToastContext";
 
 export const TicketsView = () => {
   const [dataTicket, setDataTicket] = useState([]);
@@ -14,6 +15,7 @@ export const TicketsView = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [countsTickets, setCountsTickets] = useState(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +47,18 @@ export const TicketsView = () => {
       return matchesId || matchesTitle || matchesDescription;
     });
   }, [dataTicket, searchTerm]);
+
+  const handleDeleteTicket = async (ticketId) => {
+    try {
+      await deleteTicket(ticketId);
+      // Actualizar la lista después de borrar
+      const updatedTickets = dataTicket.filter(t => (t.ticketId || t.id) !== ticketId);
+      setDataTicket(updatedTickets);
+    } catch (error) {
+      console.error("Error deleting ticket:", error);
+      showToast("Action Failed", "Unable to delete ticket. Please check your permissions or try again later.");
+    }
+  };
 
   return (
     <div className={styles.ticketsViewContainer}>
@@ -97,7 +111,7 @@ export const TicketsView = () => {
         {loading ? (
           <div className={styles.loading}>Cargando tickets...</div>
         ) : (
-          <TicketsTable data={filteredTickets} />
+          <TicketsTable data={filteredTickets} onDelete={handleDeleteTicket} />
         )}
       </main>
     </div>
