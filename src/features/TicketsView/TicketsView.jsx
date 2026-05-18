@@ -7,6 +7,10 @@ import { ViewHeader } from "../../ui/ViewHeader/ViewHeader";
 import { StatsCard } from "../../ui/StatsCard/StatsCard";
 import { TicketStatusSelector, TicketTypeSelector } from "../../ui/TicketsSelector/TicketsSelector";
 import { useToast } from "../../context/ToastContext";
+import TicketCheck from "../../assets/ticketCheck.svg?react";
+import TicketInProgress from "../../assets/ticketInProgress.svg?react";
+import TicketPending from "../../assets/ticketPending.svg?react";
+import TicketIcon from "../../assets/ticketIcon.svg?react";
 
 export const TicketsView = () => {
   const [dataTicket, setDataTicket] = useState([]);
@@ -51,7 +55,6 @@ export const TicketsView = () => {
   const handleDeleteTicket = async (ticketId) => {
     try {
       await deleteTicket(ticketId);
-      // Actualizar la lista después de borrar
       const updatedTickets = dataTicket.filter(t => (t.ticketId || t.id) !== ticketId);
       setDataTicket(updatedTickets);
     } catch (error) {
@@ -71,18 +74,22 @@ export const TicketsView = () => {
         <StatsCard
           nameCard={"Ticket Totales"}
           numberCard={countsTickets?.ticketsQuantity}
+          iconCard={TicketIcon}
         />
         <StatsCard
           nameCard={"Ticket Pendiente Totales"}
           numberCard={countsTickets?.ticketsPending}
+          iconCard={TicketPending}
         />
         <StatsCard
           nameCard={"Ticket en progreso Totales"}
           numberCard={countsTickets?.ticketsInProgress}
+          iconCard={TicketInProgress}
         />
         <StatsCard
           nameCard={"Ticket resuelto Totales"}
           numberCard={countsTickets?.ticketsResolve}
+          iconCard={TicketCheck}
         />
       </section>
       <section className={styles.containerFilters}>
