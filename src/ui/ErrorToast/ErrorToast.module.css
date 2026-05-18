@@ -1,5 +1,5 @@
 .toastContainer {
-  background-color: var(--code-bg);
+  background-color: var(--white-color);
   border: 1px solid var(--border);
   border-radius: 8px;
   width: 350px;
@@ -35,7 +35,7 @@
 
 .title {
   font-weight: 600;
-  color: var(--text-h);
+  color: var(--black);
   font-size: 16px;
   margin: 0;
 }
@@ -74,6 +74,6 @@
 .message {
   margin: 0;
   font-size: 14px;
-  color: var(--text);
+  color: var(--black);
   line-height: 1.5;
 }
