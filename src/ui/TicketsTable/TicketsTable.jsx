@@ -2,7 +2,7 @@ import styles from "./TicketsTable.module.css";
 import TrashIcon from "../../assets/trashIcon.svg?react";
 import EyesIcon from "../../assets/lockPasswordIcon.svg?react";
 
-export const TicketsTable = ({ data = [], onDelete }) => {
+export const TicketsTable = ({ data = [], onDelete, onView }) => {
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -78,7 +78,11 @@ export const TicketsTable = ({ data = [], onDelete }) => {
                 </td>
                 <td className={styles.tableCell}>
                   <div className={styles.cellActions}>
-                    <div className={`${styles.actionsContainer} ${styles.view}`} title="Ver detalles">
+                    <div 
+                      className={`${styles.actionsContainer} ${styles.view}`} 
+                      title="Ver detalles"
+                      onClick={() => onView && onView(ticket)}
+                    >
                       <EyesIcon />
                     </div>
                     <div 

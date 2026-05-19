@@ -11,6 +11,7 @@ import TicketCheck from "../../assets/ticketCheck.svg?react";
 import TicketInProgress from "../../assets/ticketInProgress.svg?react";
 import TicketPending from "../../assets/ticketPending.svg?react";
 import TicketIcon from "../../assets/ticketIcon.svg?react";
+import { TicketModal } from "../TicketModal/TicketModal";
 
 export const TicketsView = () => {
   const [dataTicket, setDataTicket] = useState([]);
@@ -19,6 +20,7 @@ export const TicketsView = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [countsTickets, setCountsTickets] = useState(null);
+  const [selectedTicket, setSelectedTicket] = useState(null);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -118,9 +120,20 @@ export const TicketsView = () => {
         {loading ? (
           <div className={styles.loading}>Cargando tickets...</div>
         ) : (
-          <TicketsTable data={filteredTickets} onDelete={handleDeleteTicket} />
+          <TicketsTable 
+            data={filteredTickets} 
+            onDelete={handleDeleteTicket} 
+            onView={(ticket) => setSelectedTicket(ticket)} 
+          />
         )}
       </main>
+
+      {selectedTicket && (
+        <TicketModal 
+          ticket={selectedTicket} 
+          onClose={() => setSelectedTicket(null)} 
+        />
+      )}
     </div>
   );
 };
