@@ -15,6 +15,7 @@ import StatsIcon from "../../assets/statsAnalityc.svg?react";
 import TicketIcon from "../../assets/ticketIcon.svg?react";
 import { CustomerModal } from '../CustomerModal/CustomerModal';
 import { ViewHeader } from '../../ui/ViewHeader/ViewHeader';
+import { useToast } from '../../context/ToastContext';
 
 
 const CustomerProfile = () => {
@@ -24,6 +25,7 @@ const CustomerProfile = () => {
   const [activeCategory, setActiveCategory] = useState('resume');
   const [tickets, setAllTickets] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { showToast } = useToast();
 
   const fetchData = async () => {
     try {
@@ -55,10 +57,11 @@ const CustomerProfile = () => {
     if (confirmDelete) {
       try {
         await deleteCustomerById({ customerId: id });
+        showToast("Cliente eliminado", "El cliente fue eliminado exitosamente.", "success");
         navigate('/admin/customers');
       } catch (error) {
         console.error("Error al eliminar el cliente:", error);
-        alert("Hubo un error al intentar eliminar el cliente.");
+        showToast("Error", "Hubo un error al intentar eliminar el cliente.", "error");
       }
     }
   }

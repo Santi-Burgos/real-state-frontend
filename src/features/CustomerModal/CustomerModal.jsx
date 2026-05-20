@@ -8,8 +8,10 @@ import EmailIcon from "../../assets/emailIcon.svg?react";
 import TagIcon from "../../assets/tagCustomerIcon.svg?react";
 import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
 import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment.jsx";
+import { useToast } from "../../context/ToastContext";
 
 export const CustomerModal = ({ onClose, initialData }) => {
+  const { showToast } = useToast();
   const [customerData, setCustomerData] = useState({
     customerName: initialData?.customerName || "",
     email: initialData?.customerEmail || initialData?.email || "",
@@ -40,8 +42,14 @@ export const CustomerModal = ({ onClose, initialData }) => {
       let response;
       if (initialData?.customerId) {
         response = await updateCustomer({ id: initialData.customerId, ...sanatizedForm });
+        if (response.success) {
+          showToast("Cliente Actualizado", "El cliente ha sido actualizado exitosamente.", "success");
+        }
       } else {
         response = await createCustomer(sanatizedForm);
+        if (response.success) {
+          showToast("Cliente Creado", "El cliente ha sido registrado exitosamente.", "success");
+        }
       }
 
       if (response.success) {
@@ -49,6 +57,7 @@ export const CustomerModal = ({ onClose, initialData }) => {
       }
     } catch (error) {
       console.log(error);
+      showToast("Error", "Ocurrió un error al guardar el cliente.", "error");
     }
   }
 

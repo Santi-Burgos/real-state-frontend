@@ -59,6 +59,7 @@ export const TicketsView = () => {
       await deleteTicket(ticketId);
       const updatedTickets = dataTicket.filter(t => (t.ticketId || t.id) !== ticketId);
       setDataTicket(updatedTickets);
+      showToast("Ticket eliminado", "El ticket fue eliminado con éxito.", "success");
     } catch (error) {
       console.error("Error deleting ticket:", error);
       showToast("Action Failed", "Unable to delete ticket. Please check your permissions or try again later.");
