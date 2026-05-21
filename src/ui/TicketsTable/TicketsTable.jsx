@@ -1,8 +1,18 @@
+import { useState } from "react";
 import styles from "./TicketsTable.module.css";
 import TrashIcon from "../../assets/trashIcon.svg?react";
 import EyesIcon from "../../assets/lockPasswordIcon.svg?react";
+import { TicketStatusSelector } from "../TicketsSelector/TicketsSelector";
 
-export const TicketsTable = ({ data = [], onDelete, onView }) => {
+export const TicketsTable = ({ data = [], onDelete, onView, onUpdate }) => {
+  const [editing, setEditing] = useState({ id: null, field: null });
+
+  const handleUpdate = (id, field, value) => {
+    if (value !== "") {
+      onUpdate && onUpdate(id, { ticketStatusId: Number(value) });
+    }
+    setEditing({ id: null, field: null });
+  };
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -69,9 +79,24 @@ export const TicketsTable = ({ data = [], onDelete, onView }) => {
                   </span>
                 </td>
                 <td className={styles.tableCell}>
-                  <span className={`${styles.badgeStatus} ${styles[`status_${ticket.ticketStatusId}`] || styles[ticket.ticketStatusId?.toLowerCase()]}`}>
-                    {getStatusLabel(ticket.ticketStatusId)}
-                  </span>
+                  {editing.id === (ticket.ticketId || ticket.id) && editing.field === 'status' ? (
+                    <TicketStatusSelector
+                      value={ticket.ticketStatusId}
+                      onChange={(e) => handleUpdate(ticket.ticketId || ticket.id, 'status', e.target.value)}
+                      onBlur={() => setEditing({ id: null, field: null })}
+                      autoFocus
+                      isEdit={true}
+                    />
+                  ) : (
+                    <span 
+                      className={`${styles.badgeStatus} ${styles[`status_${ticket.ticketStatusId}`] || styles[ticket.ticketStatusId?.toLowerCase()]}`}
+                      onClick={() => setEditing({ id: ticket.ticketId || ticket.id, field: 'status' })}
+                      style={{ cursor: "pointer" }}
+                      title="Editar estado"
+                    >
+                      {getStatusLabel(ticket.ticketStatusId)}
+                    </span>
+                  )}
                 </td>
                 <td className={styles.tableCell}>
                   <div className={styles.descriptionText}>{ticket.description}</div>

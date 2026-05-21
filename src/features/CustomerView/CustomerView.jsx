@@ -12,9 +12,11 @@ import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
 import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment";
 import SliderDJIcon from "../../assets/sliderDJIcon.svg?react"
 import { ViewHeader } from "../../ui/ViewHeader/ViewHeader";
+import { useToast } from "../../context/ToastContext";
 
 export const CustomerView = () =>{
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [showForm, setShowForm] = useState(false);
   const [dataCustomer, setDataCustomer] = useState([]);
   const [valueFilter, setValueFilter] = useState({
@@ -70,8 +72,10 @@ export const CustomerView = () =>{
     try {
       await updateCustomer({ id, ...newData });
       setRefresh(prev => prev + 1);
+      showToast("¡Actualizado!", "El estado del cliente se actualizó correctamente.", "success");
     } catch (error) {
       console.error("Error updating customer:", error);
+      showToast("Error", "No se pudo actualizar el cliente.", "error");
     }
   }
 

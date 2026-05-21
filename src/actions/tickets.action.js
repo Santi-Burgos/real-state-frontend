@@ -34,3 +34,13 @@ export const deleteTicket = async (id) => {
     throw error;
   }
 }
+
+export const updateTicket = async ({ id, ...data }) => {
+  try {
+    console.log("data", data);
+    const res = await axiosInstance.patch(`tickets/${id}`, data);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

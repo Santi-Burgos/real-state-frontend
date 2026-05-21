@@ -42,19 +42,13 @@ export const CustomerModal = ({ onClose, initialData }) => {
       let response;
       if (initialData?.customerId) {
         response = await updateCustomer({ id: initialData.customerId, ...sanatizedForm });
-        if (response.success) {
-          showToast("Cliente Actualizado", "El cliente ha sido actualizado exitosamente.", "success");
-        }
+        showToast("Cliente Actualizado", "El cliente ha sido actualizado exitosamente.", "success");
       } else {
         response = await createCustomer(sanatizedForm);
-        if (response.success) {
-          showToast("Cliente Creado", "El cliente ha sido registrado exitosamente.", "success");
-        }
+        showToast("Cliente Creado", "El cliente ha sido registrado exitosamente.", "success");
       }
 
-      if (response.success) {
-        onClose();
-      }
+      onClose();
     } catch (error) {
       console.log(error);
       showToast("Error", "Ocurrió un error al guardar el cliente.", "error");

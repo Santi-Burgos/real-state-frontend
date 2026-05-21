@@ -1,12 +1,16 @@
 import styles from "./TicketsSelector.module.css";
 import SliderDJIcon from "../../assets/sliderDJIcon.svg?react";
 
-export const TicketStatusSelector = ({ value, onChange, ...props }) => {
+export const TicketStatusSelector = ({ value, onChange, isEdit, ...props }) => {
   return (
     <div className={styles.inputWrapper}>
       <SliderDJIcon className={styles.inputIcon} />
       <select value={value} onChange={onChange} {...props}>
-        <option value="">Todos los Estados</option>
+        {isEdit ? (
+          <option value="" disabled>Estado del ticket</option>
+        ) : (
+          <option value="">Todos los Estados</option>
+        )}
         <option value="1">Pendiente</option>
         <option value="2">En Progreso</option>
         <option value="3">Resuelto</option>

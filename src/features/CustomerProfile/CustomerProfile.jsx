@@ -16,6 +16,7 @@ import TicketIcon from "../../assets/ticketIcon.svg?react";
 import { CustomerModal } from '../CustomerModal/CustomerModal';
 import { ViewHeader } from '../../ui/ViewHeader/ViewHeader';
 import { useToast } from '../../context/ToastContext';
+import { CUSTOMER_TYPE_LABELS } from '../../utils/customer.enums';
 
 
 const CustomerProfile = () => {
@@ -104,7 +105,7 @@ const CustomerProfile = () => {
                 <strong>{profileCustomer.customerName}</strong>
               </div>
               <div className={`${styles.customerTypeContainer} ${styles[profileCustomer.customerType.toLowerCase()]}`}>
-                {profileCustomer.customerType.toLowerCase()}
+                {CUSTOMER_TYPE_LABELS[profileCustomer.customerType.toLowerCase()] || profileCustomer.customerType}
               </div>
             </div>
             <div className={styles.extraData}>

@@ -1,4 +1,4 @@
-import { getAllTickets, deleteTicket } from "../../actions/tickets.action";
+import { getAllTickets, deleteTicket, updateTicket } from "../../actions/tickets.action";
 import { TicketsTable } from "../../ui/TicketsTable/TicketsTable";
 import { useState, useEffect, useMemo } from "react";
 import styles from "./TicketsView.module.css";
@@ -21,6 +21,7 @@ export const TicketsView = () => {
   const [typeFilter, setTypeFilter] = useState("");
   const [countsTickets, setCountsTickets] = useState(null);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [refresh, setRefresh] = useState(0);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export const TicketsView = () => {
       }
     };
     fetchData();
-  }, [statusFilter, typeFilter]);
+  }, [statusFilter, typeFilter, refresh]);
 
   const filteredTickets = useMemo(() => {
     if (!dataTicket) return [];
@@ -66,6 +67,18 @@ export const TicketsView = () => {
     }
   };
 
+  const handleUpdateCall = async (id, newData) => {
+    try {
+      const sanatizedData = newData?.ticketStatusId
+      await updateTicket({ id, ...newData });
+      setRefresh((prev) => prev + 1);
+      showToast("¡Actualizado!", "El estado del ticket se actualizó correctamente.", "success");
+    } catch (error) {
+      console.error("Error updating ticket:", error);
+      showToast("Error", "No se pudo actualizar el ticket.", "error");
+    }
+  };
+
   return (
     <div className={styles.ticketsViewContainer}>
       <ViewHeader
@@ -80,17 +93,17 @@ export const TicketsView = () => {
           iconCard={TicketIcon}
         />
         <StatsCard
-          nameCard={"Ticket Pendiente Totales"}
+          nameCard={"Ticket Pendiente"}
           numberCard={countsTickets?.ticketsPending}
           iconCard={TicketPending}
         />
         <StatsCard
-          nameCard={"Ticket en progreso Totales"}
+          nameCard={"Ticket en progreso"}
           numberCard={countsTickets?.ticketsInProgress}
           iconCard={TicketInProgress}
         />
         <StatsCard
-          nameCard={"Ticket resuelto Totales"}
+          nameCard={"Ticket resuelto"}
           numberCard={countsTickets?.ticketsResolve}
           iconCard={TicketCheck}
         />
@@ -125,6 +138,7 @@ export const TicketsView = () => {
             data={filteredTickets} 
             onDelete={handleDeleteTicket} 
             onView={(ticket) => setSelectedTicket(ticket)} 
+            onUpdate={handleUpdateCall}
           />
         )}
       </main>

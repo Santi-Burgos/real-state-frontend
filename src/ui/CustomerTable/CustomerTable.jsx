@@ -4,6 +4,7 @@ import TrashIcon from "../../assets/trashIcon.svg?react";
 import EyesIcon from "../../assets/lockPasswordIcon.svg?react";
 import { CustomerSelector } from "../../ui/CustomerSelector/CustomerSelector";
 import { SelectorPaymentStatus } from "../../ui/StatusPayment/StatusPayment";
+import { CUSTOMER_TYPE_LABELS, CUSTOMER_STATUS_PAYMENT_LABELS } from "../../utils/customer.enums";
 
 export const CustomerTable = ({ data, actionDelete, actionView, actionUpdate }) => {
   const [editing, setEditing] = useState({ id: null, field: null });
@@ -11,15 +12,16 @@ export const CustomerTable = ({ data, actionDelete, actionView, actionUpdate }) 
   const typeMapping = {
     "tenant": "1",
     "buyer": "2",
-    "potencial inquilino": "3",
-    "potencial comprador": "4",
+    "prospective tenant": "3",
+    "prospective buyer": "4",
     "customer": "5"
   };
 
   const statusMapping = {
     "pending": "1",
     "unpaid": "2",
-    "paid": "3"
+    "paid": "3",
+    "non_billable": "4"
   };
 
   const handleTableClick = (e) => {
@@ -94,7 +96,7 @@ export const CustomerTable = ({ data, actionDelete, actionView, actionUpdate }) 
                       className={`${styles.badge} ${styles[d.customerType.toLowerCase()] || ""} ${styles.editable}`}
                       onClick={() => setEditing({ id: d.customerId, field: 'customerType' })}
                     >
-                      {d.customerType.toLowerCase()}
+                      {CUSTOMER_TYPE_LABELS[d.customerType.toLowerCase()] || d.customerType}
                     </span>
                   )}
                 </td>
@@ -112,8 +114,9 @@ export const CustomerTable = ({ data, actionDelete, actionView, actionUpdate }) 
                       className={`${styles.badgePayment} ${styles[d.customerStatusPayment.toLowerCase()] || ""} ${styles.editable}`}
                       onClick={() => setEditing({ id: d.customerId, field: 'customerStatusPayment' })}
                     >
-                      {d.customerStatusPayment.toLowerCase() != "null"
-                        ? d.customerStatusPayment.toLowerCase() : "-"}
+                      {d.customerStatusPayment.toLowerCase() !== "null"
+                        ? (CUSTOMER_STATUS_PAYMENT_LABELS[d.customerStatusPayment.toLowerCase()] || d.customerStatusPayment) 
+                        : "-"}
                     </span>
                   )}
                 </td>
